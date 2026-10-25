@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إشعارات الدرجات - مدرسة أم سلمة الخيرية</title>
+    <title>إشعار درجات الطالبات - مدرسة أم سلمة الخيرية</title>
+    <!-- مكتبة قراءة ملف PDF الشعار وتصدير الشهادات -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@500;700;800&display=swap');
+        /* استيراد الخطوط العربية المطابقة لوثائق الوورد والنموذج الأصلي */
+        @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Amiri:wght@700&family=Cairo:wght@600;700;800&family=Noto+Naskh+Arabic:wght@600;700&family=Noto+Sans+Arabic:wght@600;700;800&family=Tajawal:wght@700;800&display=swap');
+
+        :root {
+            --cert-font: 'Noto Sans Arabic', 'Arial', sans-serif;
+        }
 
         * {
             box-sizing: border-box;
@@ -14,10 +21,10 @@
         }
 
         body {
-            font-family: 'Cairo', 'Tajawal', Arial, sans-serif;
+            font-family: 'Noto Sans Arabic', 'Cairo', Arial, sans-serif;
             background-color: #e2e8f0;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             color: #000000;
         }
 
@@ -51,20 +58,20 @@
         .login-box p { margin: 0 0 20px 0; color: #666; font-size: 13px; }
         .login-box input {
             width: 100%; padding: 11px; border: 2px solid #cbd5e1; border-radius: 8px;
-            font-family: 'Cairo', sans-serif; font-size: 15px; text-align: center; margin-bottom: 15px;
+            font-family: inherit; font-size: 15px; text-align: center; margin-bottom: 15px;
         }
         .login-box button {
             width: 100%; padding: 11px; background: #1e5241; color: #fff; border: none;
-            border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer;
+            border-radius: 8px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
         }
         .login-err { color: #d90429; font-size: 12px; font-weight: 700; margin-top: 10px; display: none; }
 
-        /* ================= لوحة التحكم ================= */
+        /* ================= لوحة الإدخال ================= */
         .dashboard {
             max-width: 1080px;
             margin: 0 auto 25px auto;
             background: #ffffff;
-            padding: 22px 28px;
+            padding: 20px 24px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             border-top: 5px solid #1e5241;
@@ -73,7 +80,7 @@
         .dash-title {
             margin: 0 0 14px 0;
             color: #1e5241;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 800;
             border-bottom: 2px solid #f1f5f9;
             padding-bottom: 10px;
@@ -85,7 +92,7 @@
         }
 
         .sec-bar {
-            font-size: 13.5px;
+            font-size: 13px;
             font-weight: 700;
             color: #1e5241;
             background: #eff6f3;
@@ -105,23 +112,24 @@
         .inp-group label { font-size: 11.5px; font-weight: 700; margin-bottom: 4px; color: #1e293b; }
         .inp-group input, .inp-group select {
             padding: 7px 10px; border: 1px solid #cbd5e1; border-radius: 6px;
-            font-family: 'Cairo', sans-serif; font-size: 12.5px; background: #fff; font-weight: 600;
+            font-family: inherit; font-size: 12.5px; background: #fff; font-weight: 700;
         }
 
         .btns-row {
-            margin-top: 20px;
+            margin-top: 18px;
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
 
         .btn {
-            padding: 10px 20px; border: none; border-radius: 7px; font-family: 'Cairo', sans-serif;
-            font-weight: 700; font-size: 13.5px; cursor: pointer; color: #fff;
+            padding: 10px 18px; border: none; border-radius: 7px; font-family: inherit;
+            font-weight: 700; font-size: 13px; cursor: pointer; color: #fff;
         }
         .btn-add { background: #1e5241; }
         .btn-prv { background: #d97706; }
         .btn-print { background: #0284c7; }
+        .btn-git { background: #4f46e5; }
         .btn-clear { background: #e11d48; margin-right: auto; }
 
         #previewTopBar {
@@ -141,24 +149,26 @@
         }
 
         /* =========================================================================
-           تصميم الشهادة الأصلي (طبق الأصل 100% من الصورة المرفقة والخط والحدود)
+           تصميم الشهادة المطابق 100% للنموذج الأصلي والخط والمسافات
         ========================================================================= */
         .pages-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 25px;
+            overflow-x: auto;
         }
 
         .cert-page {
             width: 210mm;
+            min-width: 210mm;
             height: 297mm;
             background: #ffffff;
-            padding: 10mm 14mm 10mm 14mm;
+            padding: 11mm 14mm 10mm 14mm;
             margin: 0 auto;
             box-shadow: 0 5px 25px rgba(0,0,0,0.15);
             position: relative;
-            font-family: 'Tajawal', 'Cairo', 'Arial', sans-serif;
+            font-family: var(--cert-font);
             direction: rtl;
             page-break-after: always;
             break-after: page;
@@ -170,20 +180,20 @@
             break-after: auto;
         }
 
-        /* 1. الترويسة العلوية مع الشعار المدمج */
+        /* 1. الترويسة العلوية */
         .top-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .hdr-right {
             width: 34%;
             text-align: center;
-            font-size: 13.5px;
-            font-weight: 800;
-            line-height: 1.55;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.65;
         }
 
         .hdr-center {
@@ -196,8 +206,8 @@
         }
 
         .logo-box {
-            width: 175px;
-            height: 95px;
+            width: 180px;
+            height: 98px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -213,44 +223,44 @@
             width: 30%;
         }
 
-        /* العناوين الوسطى تحت الشعار */
+        /* العناوين الوسطى تحت الشعار بمسافات مريحة مطابقة للنموذج */
         .center-titles {
             text-align: center;
-            margin-top: 2px;
-            margin-bottom: 10px;
+            margin-top: 8px;
+            margin-bottom: 14px;
         }
 
         .center-titles .title-ar {
             font-size: 14.5px;
-            font-weight: 800;
-            margin-bottom: 3px;
+            font-weight: 700;
+            margin-bottom: 6px;
         }
 
         .center-titles .title-en {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 12.5px;
-            font-weight: 800;
+            font-weight: 700;
             letter-spacing: 0.2px;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .center-titles .grade-ar {
-            font-size: 14.5px;
-            font-weight: 800;
-            margin-bottom: 2px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
         }
 
         .center-titles .grade-en {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 12.5px;
-            font-weight: 800;
+            font-weight: 700;
         }
 
-        /* 2. الجدول الأول (المربع الأول: كل الخلايا رمادية بحدود سوداء حادة ومطابقة للصورة) */
+        /* 2. الجدول الأول (المربع الأول: كل الخلايا رمادية بحدود سوداء واضحة ومرتبة) */
         table.info-tbl {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             table-layout: fixed;
             border: 1.8px solid #000000;
         }
@@ -261,18 +271,17 @@
             padding: 3px 6px;
             text-align: center;
             vertical-align: middle;
-            font-size: 13.5px;
-            font-weight: 800;
-            height: 27px;
-            line-height: 1.15;
+            font-size: 13px;
+            font-weight: 700;
+            height: 28px;
+            line-height: 1.2;
             white-space: nowrap;
-            overflow: hidden;
         }
 
         .en-txt {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 11.5px;
-            font-weight: 800;
+            font-size: 11px;
+            font-weight: 700;
             direction: ltr;
         }
 
@@ -280,7 +289,7 @@
         table.marks-tbl {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             table-layout: fixed;
             border: 1.8px solid #000000;
         }
@@ -291,7 +300,7 @@
             text-align: center;
             vertical-align: middle;
             font-size: 13.5px;
-            font-weight: 800;
+            font-weight: 700;
             height: 25px;
             line-height: 1.15;
         }
@@ -300,46 +309,46 @@
             background-color: #d9d9d9 !important;
             height: 35px;
             font-size: 15px;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         table.marks-tbl th.en-th {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 16px;
-            font-weight: 800;
+            font-size: 15.5px;
+            font-weight: 700;
             direction: ltr;
         }
 
         .en-sub-cell {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 11.5px !important;
-            font-weight: 800 !important;
+            font-weight: 700 !important;
             direction: ltr;
         }
 
         .num-cell {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 13px !important;
-            font-weight: 800 !important;
+            font-weight: 700 !important;
         }
 
         .conduct-en-cell {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 13.5px !important;
-            font-weight: 800 !important;
+            font-weight: 700 !important;
             text-align: left !important;
             padding-left: 14px !important;
             direction: ltr;
         }
 
-        /* 4. منطقة التوقيعات والختم (مطابقة للصورة تماماً) */
+        /* 4. منطقة التوقيعات والختم */
         .sigs-section {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             padding: 0 15px;
-            margin-top: 6px;
-            margin-bottom: 16px;
+            margin-top: 8px;
+            margin-bottom: 18px;
         }
 
         .sig-right-col {
@@ -351,8 +360,8 @@
             width: 28%;
             text-align: center;
             padding-top: 12px;
-            font-size: 14px;
-            font-weight: 800;
+            font-size: 13.5px;
+            font-weight: 700;
         }
 
         .sig-left-col {
@@ -362,27 +371,27 @@
         }
 
         .sig-block-ar {
-            font-size: 13.5px;
-            font-weight: 800;
-            line-height: 1.3;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.35;
         }
 
         .sig-block-en {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 12px;
-            font-weight: 800;
+            font-size: 11.5px;
+            font-weight: 700;
             margin-top: 2px;
         }
 
         .sig-val-name {
             margin-top: 5px;
-            font-size: 13.5px;
-            font-weight: 800;
+            font-size: 13px;
+            font-weight: 700;
             min-height: 18px;
         }
 
         .principal-box {
-            margin-top: 12px;
+            margin-top: 14px;
         }
 
         /* 5. شرح المستويات في أسفل الورقة */
@@ -397,22 +406,22 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            font-size: 12.5px;
-            font-weight: 800;
+            font-size: 12px;
+            font-weight: 700;
         }
 
         .levels-head-bar .en-side {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 11.5px;
-            font-weight: 800;
+            font-size: 11px;
+            font-weight: 700;
             direction: ltr;
         }
 
         .lvl-item-ar {
             text-align: right;
-            font-size: 11px;
-            font-weight: 800;
-            line-height: 1.35;
+            font-size: 10.5px;
+            font-weight: 700;
+            line-height: 1.4;
             margin-bottom: 1px;
         }
 
@@ -420,8 +429,8 @@
             text-align: left;
             direction: ltr;
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 10px;
-            font-weight: 800;
+            font-size: 9.8px;
+            font-weight: 700;
             line-height: 1.3;
             margin-bottom: 4px;
         }
@@ -435,7 +444,6 @@
             border: none;
             padding: 5px 12px;
             border-radius: 5px;
-            font-family: 'Cairo', sans-serif;
             font-size: 12px;
             font-weight: 700;
             cursor: pointer;
@@ -457,6 +465,7 @@
             }
             .pages-wrapper {
                 gap: 0;
+                overflow: visible;
             }
             .cert-page {
                 box-shadow: none;
@@ -483,7 +492,7 @@
 
 <!-- شريط وضع المعاينة -->
 <div id="previewTopBar" class="no-print">
-    <span>👁️ معاينة مطابقة 100% للشهادة الأصلية</span>
+    <span>👁️ معاينة الشهادة</span>
     <div style="display:flex; gap:10px;">
         <button class="btn btn-print" style="padding:6px 15px;" onclick="window.print()">🖨️ حفظ PDF / طباعة</button>
         <button class="btn btn-clear" style="padding:6px 15px;" onclick="setPreview(false)">✖ العودة للوحة الإدخال</button>
@@ -497,11 +506,22 @@
         <span style="font-size:14px; color:#1e5241;">عدد الشهادات المسجلة: <b id="stuCounter">0</b></span>
     </div>
 
-    <div class="sec-bar">1. بيانات الصف والإدارة ونوع المرحلة (تُحفظ تلقائياً لجميع الطالبات)</div>
+    <div class="sec-bar">1. اختيار الخط والشعار وبيانات الصف (تُحفظ تلقائياً)</div>
     <div class="grid-inputs">
         <div class="inp-group">
-            <label>📷 رفع صورة الشعار الأصلي (اختياري)</label>
-            <input type="file" accept="image/*" onchange="uploadSchoolLogo(event)">
+            <label>🔤 نوع الخط في الشهادة (اختر ما يناسبك)</label>
+            <select id="fontSelector" onchange="changeCertFont(this.value)">
+                <option value="'Noto Sans Arabic', 'Arial', sans-serif">1. خط الوورد الرسمي (Arial / Noto Sans) - مطابق للصورة</option>
+                <option value="'Noto Naskh Arabic', 'Arial', serif">2. خط النسخ الرسمي (Noto Naskh Arabic)</option>
+                <option value="'Almarai', 'Arial', sans-serif">3. خط المراعي الرسمي (Almarai)</option>
+                <option value="'Tahoma', 'Noto Sans Arabic', sans-serif">4. خط تاهوما (Tahoma)</option>
+                <option value="'Tajawal', sans-serif">5. خط تجوال (Tajawal)</option>
+                <option value="'Amiri', serif">6. خط أميري (Amiri)</option>
+            </select>
+        </div>
+        <div class="inp-group">
+            <label>📷 رفع ملف الشعار (يقبل PDF الشعار أو صورة)</label>
+            <input type="file" accept="application/pdf,image/*" onchange="uploadSchoolLogo(event)">
         </div>
         <div class="inp-group">
             <label>نظام المواد (عدد المواد بالجدول)</label>
@@ -548,7 +568,7 @@
         </div>
         <div class="inp-group">
             <label>تاريخ الميلاد</label>
-            <input type="text" id="inDob" placeholder="مثال: 2013 أو 1435هـ">
+            <input type="text" id="inDob" placeholder="مثال: 2013">
         </div>
         <div class="inp-group">
             <label>الجنسية (عربي)</label>
@@ -586,6 +606,7 @@
         <button class="btn btn-add" onclick="addStudentRecord()">➕ إضافة الطالبة</button>
         <button class="btn btn-prv" onclick="setPreview(true)">👁️ معاينة العرض الكامل</button>
         <button class="btn btn-print" onclick="window.print()">🖨️ تصدير PDF / طباعة جميع الشهادات</button>
+        <button class="btn btn-git" onclick="downloadFinalHtmlForGithub()">💾 تحميل ملف index.html النهائي لـ GitHub</button>
         <button class="btn btn-clear" onclick="clearAllRecords()">🗑️ مسح الكل</button>
     </div>
 </div>
@@ -593,24 +614,98 @@
 <!-- حاوية الشهادات -->
 <div class="pages-wrapper" id="certsWrapper"></div>
 
-<script>
-    // شعار مدرسة أم سلمة الخيرية (بنات) مرسوم بدقة عالية مطابق للشعار البيضاوي المرفق
-    const DEFAULT_LOGO = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 150"><ellipse cx="130" cy="68" rx="75" ry="52" fill="%23fdf8fb" stroke="%239b5986" stroke-width="3.5"/><ellipse cx="130" cy="68" rx="68" ry="45" fill="none" stroke="%237a9e7e" stroke-width="1.5"/><path d="M72,58 A58,38 0 0,1 188,58" fill="none" stroke="%23d8b4ce" stroke-width="14" opacity="0.45"/><text x="130" y="34" font-family="Cairo, Arial" font-size="9.5" font-weight="bold" fill="%233b1d31" text-anchor="middle">إن هذا القرآن يهدي للتي هي أقوم</text><rect x="95" y="44" width="70" height="32" rx="4" fill="%23f4fbf4" stroke="%234f7754" stroke-width="1.8"/><line x1="130" y1="44" x2="130" y2="76" stroke="%234f7754" stroke-width="1.5"/><text x="147" y="57" font-family="Cairo, Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">إنا نحن</text><text x="147" y="68" font-family="Cairo, Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">نزلنا الذكر</text><text x="112" y="57" font-family="Cairo, Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">وإنا له</text><text x="112" y="68" font-family="Cairo, Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">لحافظون</text><rect x="62" y="88" width="136" height="22" rx="4" fill="%23ecd5e6" stroke="%237c3f68" stroke-width="1.8"/><text x="130" y="103" font-family="Cairo, Arial" font-size="12" font-weight="bold" fill="%23222" text-anchor="middle">مدرسة أم سلمة الخيرية</text><rect x="96" y="114" width="68" height="18" rx="4" fill="%23ecd5e6" stroke="%237c3f68" stroke-width="1.5"/><text x="130" y="127" font-family="Cairo, Arial" font-size="10.5" font-weight="bold" fill="%23222" text-anchor="middle">( بنات )</text></svg>`;
+<script id="mainScript">
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+    const DEFAULT_LOGO = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 150"><ellipse cx="130" cy="68" rx="75" ry="52" fill="%23fdf8fb" stroke="%239b5986" stroke-width="3.5"/><ellipse cx="130" cy="68" rx="68" ry="46" fill="none" stroke="%237a9e7e" stroke-width="1.5"/><path d="M72,58 A58,38 0 0,1 188,58" fill="none" stroke="%23d8b4ce" stroke-width="14" opacity="0.45"/><text x="130" y="34" font-family="Arial" font-size="9.5" font-weight="bold" fill="%233b1d31" text-anchor="middle">إن هذا القرآن يهدي للتي هي أقوم</text><rect x="95" y="44" width="70" height="32" rx="4" fill="%23f4fbf4" stroke="%234f7754" stroke-width="1.8"/><line x1="130" y1="44" x2="130" y2="76" stroke="%234f7754" stroke-width="1.5"/><text x="147" y="57" font-family="Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">إنا نحن</text><text x="147" y="68" font-family="Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">نزلنا الذكر</text><text x="112" y="57" font-family="Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">وإنا له</text><text x="112" y="68" font-family="Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">لحافظون</text><rect x="62" y="88" width="136" height="22" rx="4" fill="%23ecd5e6" stroke="%237c3f68" stroke-width="1.8"/><text x="130" y="103" font-family="Arial" font-size="12" font-weight="bold" fill="%23222" text-anchor="middle">مدرسة أم سلمة الخيرية</text><rect x="96" y="114" width="68" height="18" rx="4" fill="%23ecd5e6" stroke="%237c3f68" stroke-width="1.5"/><text x="130" y="127" font-family="Arial" font-size="10.5" font-weight="bold" fill="%23222" text-anchor="middle">( بنات )</text></svg>`;
 
     let activeLogo = localStorage.getItem('ums_custom_logo') || DEFAULT_LOGO;
     document.querySelectorAll('.embedded-logo-img').forEach(img => img.src = activeLogo);
 
-    function uploadSchoolLogo(e) {
+    function changeCertFont(fontVal) {
+        document.documentElement.style.setProperty('--cert-font', fontVal);
+        localStorage.setItem('ums_cert_font', fontVal);
+    }
+
+    const savedFont = localStorage.getItem('ums_cert_font');
+    if (savedFont) {
+        document.documentElement.style.setProperty('--cert-font', savedFont);
+        window.addEventListener('DOMContentLoaded', () => {
+            const sel = document.getElementById('fontSelector');
+            if (sel) sel.value = savedFont;
+        });
+    }
+
+    // قراءة الشعار سواء كان ملف PDF (شعار مدرسة ام سلمة.pdf) أو صورة مع قص الحواف البيضاء تلقائياً
+    async function uploadSchoolLogo(e) {
         const file = e.target.files[0];
         if (!file) return;
-        const reader = new FileReader();
-        reader.onload = ev => {
-            activeLogo = ev.target.result;
+
+        if (file.type === 'application/pdf') {
+            const ab = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+            const page = await pdf.getPage(1);
+            const vp = page.getViewport({ scale: 2.0 });
+            const c = document.createElement('canvas');
+            c.width = vp.width;
+            c.height = vp.height;
+            const ctx = c.getContext('2d');
+            await page.render({ canvasContext: ctx, viewport: vp }).promise;
+
+            // قص المساحات البيضاء حول الشعار تلقائياً
+            const imgData = ctx.getImageData(0, 0, c.width, c.height);
+            const d = imgData.data;
+            let top = c.height, left = c.width, right = 0, bottom = 0;
+            for (let y = 0; y < c.height; y++) {
+                for (let x = 0; x < c.width; x++) {
+                    const i = (y * c.width + x) * 4;
+                    if (d[i] < 245 || d[i+1] < 245 || d[i+2] < 245) {
+                        if (x < left) left = x;
+                        if (x > right) right = x;
+                        if (y < top) top = y;
+                        if (y > bottom) bottom = y;
+                    }
+                }
+            }
+            const pad = 12;
+            left = Math.max(0, left - pad);
+            top = Math.max(0, top - pad);
+            right = Math.min(c.width, right + pad);
+            bottom = Math.min(c.height, bottom + pad);
+
+            const cropW = right - left;
+            const cropH = bottom - top;
+            const out = document.createElement('canvas');
+            out.width = 450;
+            out.height = Math.round(cropH * (450 / cropW));
+            out.getContext('2d').drawImage(c, left, top, cropW, cropH, 0, 0, out.width, out.height);
+
+            activeLogo = out.toDataURL('image/jpeg', 0.92);
             localStorage.setItem('ums_custom_logo', activeLogo);
             document.querySelectorAll('.embedded-logo-img').forEach(img => img.src = activeLogo);
             renderAllPages();
-        };
-        reader.readAsDataURL(file);
+            alert('تم استخراج شعار المدرسة الأصلي من ملف الـ PDF وحفظه بنجاح!');
+        } else {
+            const reader = new FileReader();
+            reader.onload = ev => {
+                activeLogo = ev.target.result;
+                localStorage.setItem('ums_custom_logo', activeLogo);
+                document.querySelectorAll('.embedded-logo-img').forEach(img => img.src = activeLogo);
+                renderAllPages();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // تنزيل ملف index.html مدمجاً بداخله الشعار والخط المختار لرفعه على GitHub
+    function downloadFinalHtmlForGithub() {
+        let fullHtml = document.documentElement.outerHTML;
+        fullHtml = fullHtml.replace(/const DEFAULT_LOGO = `[^`]+`;/, `const DEFAULT_LOGO = "${activeLogo}";`);
+        const blob = new Blob(['<!DOCTYPE html>\n' + fullHtml], { type: 'text/html;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'index.html';
+        a.click();
     }
 
     const subjects10 = [
@@ -673,7 +768,7 @@
 
     buildSubjectsInputs();
 
-    let records = JSON.parse(localStorage.getItem('ums_github_records_v1') || '[]');
+    let records = JSON.parse(localStorage.getItem('ums_github_records_v3') || '[]');
 
     function verifyLogin() {
         const p = document.getElementById('passInput').value.trim();
@@ -743,7 +838,7 @@
         };
 
         records.push(rec);
-        localStorage.setItem('ums_github_records_v1', JSON.stringify(records));
+        localStorage.setItem('ums_github_records_v3', JSON.stringify(records));
         renderAllPages();
 
         document.getElementById('inName').value = '';
@@ -756,7 +851,7 @@
 
     function removeRecord(id) {
         records = records.filter(r => r.id !== id);
-        localStorage.setItem('ums_github_records_v1', JSON.stringify(records));
+        localStorage.setItem('ums_github_records_v3', JSON.stringify(records));
         renderAllPages();
     }
 
@@ -764,7 +859,7 @@
         if (!records.length) return;
         if (confirm('هل أنت متأكد من مسح جميع الشهادات المسجلة؟')) {
             records = [];
-            localStorage.setItem('ums_github_records_v1', '[]');
+            localStorage.setItem('ums_github_records_v3', '[]');
             renderAllPages();
         }
     }
@@ -803,11 +898,11 @@
             page.innerHTML = `
                 <button class="del-btn no-print" onclick="removeRecord(${r.id})">حذف الشهادة ✕</button>
 
-                <!-- 1. الترويسة العلوية مع الشعار -->
+                <!-- 1. الترويسة العلوية -->
                 <div class="top-header">
                     <div class="hdr-right">
                         المملكة العربية السعودية<br>
-                        مدرسة ام سلمة <span style="font-size:16px; font-weight:normal;">ﷺ</span> الخيرية<br>
+                        مدرسة ام سلمة <span style="font-size:15px; font-weight:normal;">ﷺ</span> الخيرية<br>
                         لتعليم القران و السنة النبوية
                     </div>
                     <div class="hdr-center">
@@ -818,7 +913,7 @@
                     <div class="hdr-left"></div>
                 </div>
 
-                <!-- العناوين الوسطى تحت الشعار كما في الصورة تماماً -->
+                <!-- العناوين الوسطى تحت الشعار بمسافات مطابقة للأصل -->
                 <div class="center-titles">
                     <div class="title-ar">${r.titleAr}</div>
                     <div class="title-en">A NTIFICATION OF THE FIRST SEMESTER DEGREE</div>
@@ -826,53 +921,53 @@
                     <div class="grade-en">${r.gradeEn}</div>
                 </div>
 
-                <!-- 2. الجدول الأول (كله باللون الرمادي وبنفس تقسيم الأعمدة والحدود السوداء في الصورة) -->
+                <!-- 2. الجدول الأول (كله باللون الرمادي وبأعمدة متسعة تمنع تلاصق Nationality أو تاريخ الميلاد) -->
                 <table class="info-tbl">
                     <colgroup>
-                        <col style="width: 11.5%;">
-                        <col style="width: 15.5%;">
-                        <col style="width: 10.5%;">
-                        <col style="width: 7.5%;">
-                        <col style="width: 6.5%;">
-                        <col style="width: 10.5%;">
-                        <col style="width: 38.0%;">
+                        <col style="width: 12.5%;">
+                        <col style="width: 13.0%;">
+                        <col style="width: 9.0%;">
+                        <col style="width: 8.0%;">
+                        <col style="width: 7.0%;">
+                        <col style="width: 14.0%;">
+                        <col style="width: 36.5%;">
                     </colgroup>
                     <tbody>
                         <tr>
                             <td colspan="3" style="text-align:right; padding-right:8px;">
-                                <span>إسم الطالبة:</span>
+                                <span>إسم الطالبة :</span>
                                 <span style="margin-right:4px;">${r.name}</span>
                             </td>
                             <td>الفصل</td>
                             <td class="num-cell">${r.cls}</td>
-                            <td class="en-txt" style="text-align:left; padding-left:6px;">Class:</td>
+                            <td class="en-txt" style="text-align:center;">Class:</td>
                             <td class="en-txt" style="text-align:left; padding-left:8px;">
                                 <span>Student's name:</span>
                                 <span style="margin-left:5px;">${r.nameEn || ''}</span>
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right; padding-right:8px;">تاريخ الميلاد:</td>
+                            <td style="text-align:right; padding-right:6px;">تاريخ الميلاد:</td>
                             <td class="num-cell">${r.dob}</td>
                             <td>الجنسية</td>
                             <td>${r.natAr}</td>
                             <td class="en-txt">${r.natEn}</td>
-                            <td class="en-txt" style="text-align:left; padding-left:6px;">Nationality:</td>
-                            <td class="en-txt" style="text-align:left; padding-left:14px;">Date of Birth:</td>
+                            <td class="en-txt" style="text-align:center;">Nationality:</td>
+                            <td class="en-txt" style="text-align:left; padding-left:8px;">Date of Birth:</td>
                         </tr>
                         <tr>
-                            <td style="text-align:right; padding-right:8px;">رقم الهوية:</td>
-                            <td colspan="5" class="num-cell" style="text-align:right; padding-right:18px; font-size:14.5px; letter-spacing:0.5px;">${r.idNo}</td>
+                            <td style="text-align:right; padding-right:6px;">رقم الهوية:</td>
+                            <td colspan="5" class="num-cell" style="text-align:right; padding-right:18px; font-size:14px; letter-spacing:0.5px;">${r.idNo}</td>
                             <td class="en-txt" style="text-align:center;">Identity No</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <!-- 3. جدول المواد الدراسية + السلوك والمواظبة المدمج بنفس حدود الصورة -->
+                <!-- 3. جدول المواد الدراسية + السلوك والمواظبة -->
                 <table class="marks-tbl">
                     <colgroup>
-                        <col style="width: 12.5%;">
-                        <col style="width: 27.5%;">
+                        <col style="width: 12.0%;">
+                        <col style="width: 28.0%;">
                         <col style="width: 33.5%;">
                         <col style="width: 26.5%;">
                     </colgroup>
@@ -920,7 +1015,7 @@
                     <div class="sig-left-col">
                         <div class="sig-block-ar">ولي أمر الطالب/ة</div>
                         <div class="sig-block-en">The student parent</div>
-                        <div class="sig-val-name" style="margin-top:8px;">${r.parentName || ''}</div>
+                        <div class="sig-val-name" style="margin-top:6px;">${r.parentName || ''}</div>
                     </div>
                 </div>
 
