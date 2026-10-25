@@ -1,0 +1,2 @@
+# omsalama
+SCHOOL
