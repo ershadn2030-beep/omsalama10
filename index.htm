@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إشعار درجات الفصل الدراسي - مدرسة أم سلمة الخيرية</title>
+    <title>إشعار درجات الفصل الدراسي - مدرسة أم سلمة الخيرية (9 مواد)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Amiri:wght@700&family=Cairo:wght@700;800&family=Noto+Naskh+Arabic:wght@600;700&family=Noto+Sans+Arabic:wght@600;700;800&family=Scheherazade+New:wght@700&family=Tajawal:wght@700;800&display=swap');
@@ -76,7 +76,7 @@
             position: fixed;
             inset: 0;
             background: linear-gradient(135deg, #13392d 0%, #1e5241 100%);
-            display: none; /* مخفية مؤقتاً في المعاينة التفاعلية لتشاهد الشهادة فوراً */
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 99999;
@@ -479,7 +479,7 @@
 <!-- لوحة الإدخال -->
 <div class="dashboard no-print" id="dashPanel">
     <div class="dash-title">
-        <span>تسجيل بيانات الطالبات (يوجد نموذج جاهز بالأسفل للمعاينة الفورية)</span>
+        <span>تسجيل بيانات الطالبات (نسخة الـ 9 مواد المعتمدة بدون الاجتماعيات)</span>
         <span style="font-size:13px; color:#1e5241;">عدد الشهادات: <b id="stuCounter">1</b></span>
     </div>
 
@@ -492,8 +492,8 @@
         <div class="inp-group">
             <label>نظام المواد</label>
             <select id="presetMode" onchange="changePresetMode(this.value)">
-                <option value="10">9 مواد (الصفوف العليا - مثل السادس)</option>
-                <option value="8">8 مواد (الصفوف الأولية)</option>
+                <option value="9">عليا (9 مواد - بدون اجتماعيات)</option>
+                <option value="8">أولية (8 مواد - بدون إنجليزي واجتماعيات)</option>
             </select>
         </div>
         <div class="inp-group">
@@ -554,7 +554,7 @@
         </div>
     </div>
 
-    <div class="sec-bar">3. التقدير لكل مادة والسلوك والمواظبة</div>
+    <div class="sec-bar">3. التقدير لكل مادة (9 مواد) والسلوك والمواظبة</div>
     <div class="grid-inputs" id="subsContainer"></div>
 
     <div class="grid-inputs" style="margin-top:8px;">
@@ -575,7 +575,7 @@
     </div>
 </div>
 
-<!-- حاوية الشهادات (تظهر فيها الشهادة فوراً) -->
+<!-- حاوية الشهادات -->
 <div class="pages-wrapper" id="certsWrapper"></div>
 
 <script>
@@ -644,7 +644,8 @@
         }
     }
 
-    const subjects10 = [
+    // 9 مواد فقط (تم حذف التربية الاجتماعية والوطنية نهائياً)
+    const subjects9 = [
         { ar: "القران الكريم", en: "The Holy Qur'an" },
         { ar: "التوحيد", en: "Monotheism" },
         { ar: "الفقة", en: "Jurisprudence" },
@@ -667,7 +668,7 @@
         { ar: "التربية الفنية", en: "Art education" }
     ];
 
-    let currentSubjects = subjects10;
+    let currentSubjects = subjects9;
 
     function buildSubjectsInputs() {
         const subsContainer = document.getElementById('subsContainer');
@@ -694,7 +695,7 @@
             document.getElementById('hdrGradeAr').value = 'الأول ابتدائي';
             document.getElementById('hdrGradeEn').value = 'The First Year Primary';
         } else {
-            currentSubjects = subjects10;
+            currentSubjects = subjects9;
             document.getElementById('hdrGradeAr').value = 'الصف السادس الإبتدائي';
             document.getElementById('hdrGradeEn').value = 'Sixth grade';
         }
@@ -703,7 +704,6 @@
 
     buildSubjectsInputs();
 
-    // بيانات طالبة جاهزة مسبقاً لتظهر الشهادة فوراً عند فتح المعاينة التفاعلية
     const sampleStudent = {
         id: 1,
         titleAr: "إشعار الدرجات الفصل الدراسي الأول لعام ١٤٤٨هـ",
@@ -721,10 +721,10 @@
         parentName: "سراج الحق فياض الحق",
         conduct: "متعاون",
         attend: "مواظب",
-        subjects: subjects10.map((s, idx) => ({ ar: s.ar, en: s.en, val: idx === 8 ? "" : "متفوق" }))
+        subjects: subjects9.map((s) => ({ ar: s.ar, en: s.en, val: "متفوق" }))
     };
 
-    let records = JSON.parse(localStorage.getItem('ums_interactive_v2') || 'null');
+    let records = JSON.parse(localStorage.getItem('ums_interactive_9subs_only') || 'null');
     if (!records || !records.length) {
         records = [sampleStudent];
     }
@@ -781,7 +781,7 @@
         };
 
         records.push(rec);
-        localStorage.setItem('ums_interactive_v2', JSON.stringify(records));
+        localStorage.setItem('ums_interactive_9subs_only', JSON.stringify(records));
         renderAllPages();
 
         document.getElementById('inName').value = '';
@@ -793,14 +793,14 @@
 
     function removeRecord(id) {
         records = records.filter(r => r.id !== id);
-        localStorage.setItem('ums_interactive_v2', JSON.stringify(records));
+        localStorage.setItem('ums_interactive_9subs_only', JSON.stringify(records));
         renderAllPages();
     }
 
     function clearAllRecords() {
         if (confirm('هل أنت متأكد من مسح جميع الشهادات؟')) {
             records = [];
-            localStorage.setItem('ums_interactive_v2', '[]');
+            localStorage.setItem('ums_interactive_9subs_only', '[]');
             renderAllPages();
         }
     }
@@ -812,7 +812,8 @@
 
         records.forEach(r => {
             let subjectRows = '';
-            const subsList = r.subjects || [];
+            // فلترة أي مادة اجتماعيات قديمة تلقائياً لضمان بقاء 9 مواد فقط
+            const subsList = (r.subjects || []).filter(s => !s.ar.includes('الإجتماعية') && !s.ar.includes('الاجتماعية'));
             subsList.forEach((sub, idx) => {
                 subjectRows += `
                     <tr>
@@ -894,7 +895,7 @@
                     </tbody>
                 </table>
 
-                <!-- 3. جدول المواد الدراسية + السلوك والمواظبة -->
+                <!-- 3. جدول المواد الدراسية (9 مواد) + السلوك والمواظبة -->
                 <table class="marks-tbl">
                     <colgroup>
                         <col style="width: 12.0%;">
