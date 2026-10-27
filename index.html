@@ -20,82 +20,59 @@
     }
 
     body {
-      background: #474b4f;
+      background: #525659;
       font-family: 'Calibri', 'Arial', sans-serif;
       color: #000000;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 18px 10px;
+      padding: 20px 10px;
     }
 
-    /* شريط التحكم العلوي - يختفي تماماً عند الطباعة */
-    .no-print-toolbar {
+    /* شريط الطباعة العلوي (يختفي تلقائياً عند الطباعة) */
+    .no-print-bar {
       width: 210mm;
       max-width: 100%;
       background: #1e293b;
       color: #fff;
-      padding: 12px 16px;
-      border-radius: 10px;
+      padding: 10px 16px;
+      border-radius: 8px;
       margin-bottom: 14px;
       display: flex;
-      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
       font-family: Tahoma, sans-serif;
-      font-size: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.35);
+      font-size: 13px;
     }
 
-    .toolbar-group {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .no-print-toolbar button, .no-print-toolbar label.btn-lbl {
+    .no-print-bar button {
       background: #10b981;
       color: #052e16;
       border: none;
-      padding: 7px 12px;
+      padding: 7px 16px;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
+      font-size: 13px;
     }
 
-    .no-print-toolbar label.btn-lbl {
-      background: #38bdf8;
-      color: #082f49;
-    }
-
-    .no-print-toolbar button.secondary-btn {
-      background: #f59e0b;
-      color: #1c1917;
-    }
-
-    /* الورقة الرسمية A4 */
+    /* ورقة A4 المطابقة للأصل */
     .a4-page {
       width: 210mm;
       min-height: 297mm;
       background: #ffffff;
       padding: 13mm 15mm 10mm 15mm;
-      box-shadow: 0 0 28px rgba(0,0,0,0.55);
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
       position: relative;
       direction: rtl;
       color: #000000;
     }
 
-    /* 1. الترويسة العلوية والشعار بنفس المقاس الأصلي */
+    /* 1. الترويسة العلوية والشعار */
     .top-header-grid {
       display: grid;
-      grid-template-columns: 1fr 1.1fr 1fr;
-      align-items: center;
+      grid-template-columns: 1.05fr 1fr 1.05fr;
+      align-items: start;
       margin-bottom: 2px;
     }
 
@@ -103,18 +80,19 @@
       text-align: center;
       font-weight: 700;
       font-size: 13.5px;
-      line-height: 1.5;
+      line-height: 1.55;
       color: #000000;
+      padding-top: 4px;
     }
 
-    /* رمز (رضي الله عنها) المرسوم بدقة عالية والمطابق للصورة الأصلية */
-    .radia-svg-wrap {
+    /* رمز (رضي الله عنها) كمخطوطة مدمجة بدون أي مربع */
+    .radia-calligraphy {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       vertical-align: middle;
-      width: 26px;
-      height: 18px;
+      width: 27px;
+      height: 20px;
       margin: 0 1px;
       transform: translateY(-2px);
     }
@@ -123,29 +101,25 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding-top: 8px;
     }
 
-    /* حجم الشعار مطابق تماماً لنسبته في الورقة المصورة */
+    /* مقاس الشعار المطابق للورقة الأصلية */
     .school-logo-wrap {
-      width: 98px;
-      height: 64px;
+      width: 105px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .school-logo-wrap img, .school-logo-wrap svg {
+    .school-logo-wrap svg {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
 
-    /* فلتر يجعل الشعار المرفوع بنفس درجة ألوان الورقة الأصلية */
-    .paper-tone-logo {
-      filter: saturate(0.45) contrast(0.95) brightness(0.98);
-    }
-
-    /* عناوين الإشعار الوسطى (بدون أي إطار أو مستطيل حولها كما في الأصل) */
+    /* عناوين الإشعار الوسطى */
     .center-titles {
       text-align: center;
       margin-top: 2px;
@@ -181,24 +155,23 @@
       direction: ltr;
     }
 
-    /* 2. الجدول الأول: بيانات الطالبة (محبّر وواضح ومطابق للتقسيم) */
+    /* 2. الجدول الأول: بيانات الطالبة (محبّر ومظلل بنفس الدرجة في الصورة) */
     table.info-table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 15px;
       font-size: 13px;
       font-weight: 700;
-      color: #000000;
-      border: 1.2px solid #111111;
-      background-color: #ffffff;
+      border: 1px solid #222222;
+      background-color: #EBEBEB;
     }
 
-    table.info-table.shaded-name-mode {
-      background-color: #EAEAEA !important;
+    table.info-table tr.name-row td {
+      background-color: #E0E0E0;
     }
 
     table.info-table td {
-      border: 1px solid #111111;
+      border: 1px solid #222222;
       padding: 2px 6px;
       height: 22px;
       vertical-align: middle;
@@ -207,24 +180,27 @@
       font-weight: 700;
     }
 
-    table.info-table td.name-ar-cell {
+    table.info-table td.right-align-cell {
       text-align: right;
       padding-right: 8px;
-      font-size: 13.2px;
-      font-weight: 800;
-      color: #000000;
       white-space: nowrap;
     }
 
-    table.info-table td.name-en-cell {
+    table.info-table td.left-align-cell {
       text-align: left;
       padding-left: 8px;
       direction: ltr;
       font-family: 'Calibri', 'Arial', sans-serif;
-      font-size: 13px;
-      font-weight: 800;
-      color: #000000;
       white-space: nowrap;
+    }
+
+    /* تنسيق خلية (الفصل: 1 Class:) المدمجة بدون خطوط فاصلة داخلية */
+    .class-merged-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      width: 100%;
     }
 
     /* 3. الجدول الثاني: المواد الدراسية والدرجات */
@@ -232,13 +208,12 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 18px;
-      border: 1.2px solid #111111;
-      color: #000000;
+      border: 1px solid #222222;
     }
 
     table.grades-table th,
     table.grades-table td {
-      border: 1px solid #111111;
+      border: 1px solid #222222;
       padding: 2px 6px;
       height: 23px;
       vertical-align: middle;
@@ -246,18 +221,23 @@
       color: #000000;
     }
 
-    /* تظليل الصف الأول بنفس اللون الرمادي في الصورة */
-    table.grades-table thead tr {
-      background-color: #D9D9D9 !important;
+    /* تظليل صف العناوين */
+    table.grades-table thead tr th {
+      background-color: #D4D4D4 !important;
       font-weight: 700;
       font-size: 13.5px;
+    }
+
+    /* تظليل صفوف المواد كما في الصورة */
+    table.grades-table tbody tr.sub-row td {
+      background-color: #EBEBEB;
     }
 
     .col-num {
       width: 10.5%;
       font-family: 'Simplified Arabic', 'Traditional Arabic', 'Amiri', serif;
       font-size: 14.5px;
-      font-weight: 700;
+      font-weight: 400;
     }
 
     .col-ar-sub {
@@ -282,17 +262,26 @@
       direction: ltr;
     }
 
-    /* صفي السلوك والمواظبة */
-    .conduct-row td {
+    /* صفي السلوك والمواظبة المدمجين بنفس تقسيم الورقة الأصلية */
+    table.grades-table tbody tr.conduct-row td {
+      background-color: #F5F5F5;
       font-family: 'Calibri', 'Arial', sans-serif;
       font-size: 13.5px;
       font-weight: 700;
     }
 
-    .conduct-row td.level-val {
+    .conduct-dual-label {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      padding: 0 18px;
+    }
+
+    table.grades-table tbody tr.conduct-row td.level-val {
       font-family: 'Simplified Arabic', 'Traditional Arabic', 'Amiri', serif;
       font-size: 14.5px;
-      font-weight: 700;
+      font-weight: 400;
     }
 
     /* 4. قسم التواقيع والختم الفارغ */
@@ -301,11 +290,10 @@
       grid-template-columns: 1.15fr 0.9fr 1.15fr;
       text-align: center;
       margin-top: 6px;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
       font-size: 13.5px;
       font-weight: 700;
-      line-height: 1.7;
-      color: #000000;
+      line-height: 1.75;
     }
 
     .sig-col p {
@@ -318,13 +306,12 @@
     }
 
     .stamp-empty-space {
-      height: 92px;
+      height: 95px;
     }
 
     /* 5. شرح مستويات الطالبة أسفل الصفحة */
     .levels-footer {
-      margin-top: 2px;
-      color: #000000;
+      margin-top: 4px;
     }
 
     .levels-header-line {
@@ -344,7 +331,7 @@
     }
 
     .level-block {
-      margin-bottom: 6px;
+      margin-bottom: 7px;
     }
 
     .level-ar {
@@ -369,7 +356,7 @@
         background: #fff;
         padding: 0;
       }
-      .no-print-toolbar {
+      .no-print-bar {
         display: none !important;
       }
       .a4-page {
@@ -383,24 +370,13 @@
 </head>
 <body>
 
-  <!-- شريط أدوات علوي (لا يظهر في الطباعة) للتحكم بحجم الشعار وتظليل خانة الاسم -->
-  <div class="no-print-toolbar">
-    <div class="toolbar-group">
-      <strong>⚙️ أدوات الضبط الدقيق:</strong>
-      <span>حجم الشعار:</span>
-      <input type="range" min="70" max="140" value="98" oninput="resizeLogo(this.value)" style="cursor:pointer;">
-      <button class="secondary-btn" onclick="toggleNameTableShading()">🎨 تحبير/تظليل جدول الاسم</button>
-    </div>
-    <div class="toolbar-group">
-      <label class="btn-lbl">
-        🖼️ رفع صورة الشعار
-        <input type="file" accept="image/*" style="display:none;" onchange="replaceLogoImage(event)">
-      </label>
-      <button onclick="window.print()">🖨️ تصدير PDF / طباعة</button>
-    </div>
+  <!-- شريط الطباعة العلوي -->
+  <div class="no-print-bar">
+    <span>📄 إشعار الدرجات المطابق للأصل (يمكنك النقر على أي نص لتعديله مباشرة قبل الطباعة)</span>
+    <button onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
   </div>
 
-  <!-- الورقة الرسمية A4 (جميع نصوصها قابلة للتعديل بالنقر المباشر) -->
+  <!-- ورقة A4 -->
   <div class="a4-page" contenteditable="true" spellcheck="false">
 
     <!-- 1. الترويسة والشعار -->
@@ -409,12 +385,11 @@
         <div>المملكة العربية السعودية</div>
         <div>
           مدرسة أم سلمة
-          <!-- رمز (رضي الله عنها) مرسوم كـ SVG مطابق للورقة الأصلية 100% ولا يتغير في أي جهاز -->
-          <span class="radia-svg-wrap" title="رضي الله عنها">
-            <svg viewBox="0 0 110 75" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <rect x="4" y="6" width="102" height="62" rx="16" fill="none" stroke="#000" stroke-width="3.5"/>
-              <text x="55" y="33" font-family="'Amiri', 'Traditional Arabic', serif" font-size="24" font-weight="bold" fill="#000" text-anchor="middle">رضي الله</text>
-              <text x="55" y="59" font-family="'Amiri', 'Traditional Arabic', serif" font-size="24" font-weight="bold" fill="#000" text-anchor="middle">عنها</text>
+          <!-- مخطوطة (رضي الله عنها) المتراكبة بدون أي مربع تماماً كما في الورقة الأصلية -->
+          <span class="radia-calligraphy" title="رضي الله عنها">
+            <svg viewBox="0 0 90 66" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <text x="45" y="26" font-family="'Amiri', 'Traditional Arabic', serif" font-size="25" font-weight="bold" fill="#000" text-anchor="middle">عَنْهَا</text>
+              <text x="45" y="55" font-family="'Amiri', 'Traditional Arabic', serif" font-size="23" font-weight="bold" fill="#000" text-anchor="middle">رَضِيَ اللهُ</text>
             </svg>
           </span>
           الخيرية
@@ -423,24 +398,34 @@
       </div>
 
       <div class="header-center-logo">
-        <div class="school-logo-wrap" id="logoContainer">
-          <!-- يحاول تحميل صورة الشعار من مجلد موقعك تلقائياً، وإن لم يجدها يعرض الشعار المطابق المرسوم -->
-          <img src="logo.png" class="paper-tone-logo" alt="شعار المدرسة" onerror="this.style.display='none'; document.getElementById('fallbackLogoSvg').style.display='block';">
-          <svg id="fallbackLogoSvg" style="display:none;" viewBox="0 0 220 145" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" stroke="#5a524c" stroke-width="2">
-              <ellipse cx="110" cy="54" rx="58" ry="42" stroke-width="2.4"/>
-              <ellipse cx="110" cy="54" rx="51" ry="35" stroke-width="1.1"/>
-              <path d="M86 50 Q98 43 110 50 Q122 43 134 50 L137 33 Q122 26 110 34 Q98 26 83 33 Z" fill="#e2dcd5" stroke="#5a524c" stroke-width="1.6"/>
-              <line x1="110" y1="34" x2="110" y2="50" stroke="#5a524c" stroke-width="1.5"/>
-              <path d="M74 28 Q110 10 146 28" stroke="#5a524c" stroke-width="1.3" stroke-dasharray="3,2"/>
-            </g>
-            <rect x="35" y="70" width="150" height="22" rx="4" fill="#ffffff" stroke="#4a433e" stroke-width="2"/>
-            <rect x="38" y="73" width="144" height="16" rx="2" fill="none" stroke="#4a433e" stroke-width="0.8"/>
-            <text x="110" y="85" font-family="Arial, Tahoma" font-size="11.5" font-weight="bold" fill="#222" text-anchor="middle">مدرسة أم سلمة الخيرية</text>
-            <rect x="74" y="94" width="72" height="16" rx="3" fill="#ffffff" stroke="#4a433e" stroke-width="1.6"/>
-            <text x="110" y="106" font-family="Arial, Tahoma" font-size="10" font-weight="bold" fill="#222" text-anchor="middle">( للبنات )</text>
-            <path d="M25 112 Q110 132 195 112 L190 124 Q110 144 30 124 Z" fill="#ffffff" stroke="#4a433e" stroke-width="1.6"/>
-            <text x="110" y="125" font-family="Arial, Tahoma" font-size="8.5" font-weight="bold" fill="#222" text-anchor="middle">لتعليم القرآن والسنة المطهرة - محافظة جدة</text>
+        <div class="school-logo-wrap">
+          <!-- شعار المدرسة المرسوم بنفس المقاس والتفاصيل في الورقة الأصلية -->
+          <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+            <!-- القوس المزدوج العلوي -->
+            <ellipse cx="110" cy="56" rx="56" ry="42" fill="#f7f5f2" stroke="#5c5550" stroke-width="2.2"/>
+            <ellipse cx="110" cy="56" rx="46" ry="33" fill="#ffffff" stroke="#5c5550" stroke-width="1.2"/>
+            <!-- مسار الآية في القوس العلوي -->
+            <path id="archTextPath" d="M 62,54 A 48,34 0 1,1 158,54" fill="none"/>
+            <text font-family="'Amiri', Arial" font-size="7.2" font-weight="bold" fill="#3a3532" text-anchor="middle">
+              <textPath href="#archTextPath" startOffset="50%">إن هذا القرآن يهدي للتي هي أقوم</textPath>
+            </text>
+            <!-- المصحف المفتوح في الوسط -->
+            <path d="M84 56 Q97 49 110 56 Q123 49 136 56 L139 36 Q123 29 110 37 Q97 29 81 36 Z" fill="#e5e0d8" stroke="#5c5550" stroke-width="1.5"/>
+            <line x1="110" y1="37" x2="110" y2="56" stroke="#5c5550" stroke-width="1.4"/>
+            <text x="96" y="45" font-family="Arial" font-size="4.5" font-weight="bold" fill="#333" text-anchor="middle">إنا نحن</text>
+            <text x="96" y="51" font-family="Arial" font-size="4.5" font-weight="bold" fill="#333" text-anchor="middle">نزلنا الذكر</text>
+            <text x="124" y="45" font-family="Arial" font-size="4.5" font-weight="bold" fill="#333" text-anchor="middle">وإنا له</text>
+            <text x="124" y="51" font-family="Arial" font-size="4.5" font-weight="bold" fill="#333" text-anchor="middle">لحافظون</text>
+            <!-- المستطيل الرئيسي: مدرسة أم سلمة الخيرية -->
+            <rect x="38" y="72" width="144" height="21" rx="3" fill="#ffffff" stroke="#4a4440" stroke-width="1.8"/>
+            <rect x="41" y="75" width="138" height="15" rx="2" fill="none" stroke="#4a4440" stroke-width="0.8"/>
+            <text x="110" y="86" font-family="Arial, Tahoma" font-size="11" font-weight="bold" fill="#222" text-anchor="middle">مدرسة أم سلمة الخيرية</text>
+            <!-- المستطيل الصغير: ( للبنات ) -->
+            <rect x="76" y="95" width="68" height="15" rx="2.5" fill="#ffffff" stroke="#4a4440" stroke-width="1.5"/>
+            <text x="110" y="106" font-family="Arial, Tahoma" font-size="9.5" font-weight="bold" fill="#222" text-anchor="middle">( للبنات )</text>
+            <!-- الشريط السفلي المنحني -->
+            <path d="M26 112 Q110 132 194 112 L189 125 Q110 144 31 125 Z" fill="#ffffff" stroke="#4a4440" stroke-width="1.5"/>
+            <text x="110" y="125" font-family="Arial, Tahoma" font-size="8.2" font-weight="bold" fill="#222" text-anchor="middle">لتعليم القرآن والسنة المطهرة بمحافظة جدة</text>
           </svg>
         </div>
       </div>
@@ -448,7 +433,7 @@
       <div></div>
     </div>
 
-    <!-- عناوين الإشعار (بدون المستطيل الأسود الخاطئ) -->
+    <!-- عناوين الإشعار -->
     <div class="center-titles">
       <div class="ar-title-1">إشعار بدرجات الفصل الدراسي الأول للعام 1445 هـ</div>
       <div class="en-title-1">A NOTIFHCATION OF THE FIRST SEMESTER DEGREE</div>
@@ -456,25 +441,29 @@
       <div class="en-grade">The Fifth Primary School</div>
     </div>
 
-    <!-- الجدول الأول: بيانات الطالبة (محبّر بالكامل ومطابق للتقسيم الأصلي) -->
-    <table class="info-table" id="studentInfoTable">
+    <!-- الجدول الأول: بيانات الطالبة (محبّر ومقسم الخلايا تماماً مثل الصورة الأصلية) -->
+    <table class="info-table">
       <colgroup>
-        <col style="width: 14%;">
-        <col style="width: 15%;">
-        <col style="width: 12%;">
+        <col style="width: 14.5%;">
+        <col style="width: 13.5%;">
+        <col style="width: 12.5%;">
         <col style="width: 10%;">
-        <col style="width: 8%;">
-        <col style="width: 10%;">
+        <col style="width: 8.5%;">
+        <col style="width: 10.5%;">
         <col style="width: 12%;">
-        <col style="width: 19%;">
+        <col style="width: 18.5%;">
       </colgroup>
       <tbody>
-        <tr>
-          <td colspan="3" class="name-ar-cell">اسم الطالبة: خديجة أولى مياه محمد فرايا</td>
-          <td>الفصل:</td>
-          <td>1</td>
-          <td style="direction:ltr; font-family:'Calibri',sans-serif;">Class:</td>
-          <td colspan="2" class="name-en-cell">Student Name:kadejah ula meyah</td>
+        <tr class="name-row">
+          <td colspan="3" class="right-align-cell">اسم الطالبة: خديجة أولى مياه محمد فرايا</td>
+          <td colspan="3">
+            <div class="class-merged-flex">
+              <span>الفصل:</span>
+              <span>1</span>
+              <span style="direction:ltr; font-family:'Calibri',sans-serif;">Class:</span>
+            </div>
+          </td>
+          <td colspan="2" class="left-align-cell">Student Name:kadejah ula meyah</td>
         </tr>
         <tr>
           <td>تاريخ الميلاد</td>
@@ -494,92 +483,100 @@
       </tbody>
     </table>
 
-    <!-- الجدول الثاني: المواد الدراسية (بدون مادة اجتماعية - مرقم من ١ إلى ١٠ بالأرقام العربية) -->
+    <!-- الجدول الثاني: جدول المواد الدراسية (بدون مادة اجتماعية - مرقم من ١ إلى ١٠) -->
     <table class="grades-table">
       <colgroup>
         <col style="width: 10.5%;">
-        <col style="width: 4.5%;">
-        <col style="width: 25.5%;">
+        <col style="width: 30%;">
         <col style="width: 29.5%;">
         <col style="width: 30%;">
       </colgroup>
       <thead>
         <tr>
           <th>م</th>
-          <th colspan="2">المواد الدراسية</th>
+          <th>المواد الدراسية</th>
           <th>مستوى الطالبة</th>
           <th style="font-family:'Calibri',sans-serif;">Subject</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">١</td>
-          <td colspan="2" class="col-ar-sub">القرآن الكريم</td>
+          <td class="col-ar-sub">القرآن الكريم</td>
           <td class="col-level">متفوق</td>
           <td class="col-en-sub">The Holy Qur'an</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">٢</td>
-          <td colspan="2" class="col-ar-sub">التوحيد</td>
+          <td class="col-ar-sub">التوحيد</td>
           <td class="col-level">متقدم</td>
           <td class="col-en-sub">Monotheism</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">٣</td>
-          <td colspan="2" class="col-ar-sub">الفقه</td>
+          <td class="col-ar-sub">الفقه</td>
           <td class="col-level">متقدم</td>
           <td class="col-en-sub">Jurisprudence</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">٤</td>
-          <td colspan="2" class="col-ar-sub">حديث</td>
+          <td class="col-ar-sub">حديث</td>
           <td class="col-level">متفوق</td>
           <td class="col-en-sub">Modern</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">٥</td>
-          <td colspan="2" class="col-ar-sub">لغتي</td>
+          <td class="col-ar-sub">لغتي</td>
           <td class="col-level">متفوق</td>
           <td class="col-en-sub">Prompt's Traditions</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">٦</td>
-          <td colspan="2" class="col-ar-sub">الرياضيات</td>
+          <td class="col-ar-sub">الرياضيات</td>
           <td class="col-level">متقدم</td>
           <td class="col-en-sub">Mathematics</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">٧</td>
-          <td colspan="2" class="col-ar-sub">العلوم</td>
+          <td class="col-ar-sub">العلوم</td>
           <td class="col-level">متقدم</td>
           <td class="col-en-sub">Science</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">٨</td>
-          <td colspan="2" class="col-ar-sub">انجليزي</td>
+          <td class="col-ar-sub">انجليزي</td>
           <td class="col-level">متفوق</td>
           <td class="col-en-sub">English</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">٩</td>
-          <td colspan="2" class="col-ar-sub">التربية الأسرية</td>
+          <td class="col-ar-sub">التربية الأسرية</td>
           <td class="col-level">متفوق</td>
           <td class="col-en-sub">Family Life Education</td>
         </tr>
-        <tr>
+        <tr class="sub-row">
           <td class="col-num">١٠</td>
-          <td colspan="2" class="col-ar-sub">التربية الفنية</td>
+          <td class="col-ar-sub">التربية الفنية</td>
           <td class="col-level">متفوق</td>
           <td class="col-en-sub">Art education</td>
         </tr>
+        <!-- صفي السلوك والمواظبة المدمجين بنفس تقسيم الخلايا في الصورة الأصلية -->
         <tr class="conduct-row">
-          <td colspan="2">السلوك</td>
-          <td style="font-family:'Calibri',sans-serif;">Conduct</td>
+          <td colspan="2">
+            <div class="conduct-dual-label">
+              <span>السلوك</span>
+              <span style="font-family:'Calibri',sans-serif;">Conduct</span>
+            </div>
+          </td>
           <td colspan="2" class="level-val">متعاونة</td>
         </tr>
         <tr class="conduct-row">
-          <td colspan="2">المواظبة</td>
-          <td style="font-family:'Calibri',sans-serif;">Attendance</td>
+          <td colspan="2">
+            <div class="conduct-dual-label">
+              <span>المواظبة</span>
+              <span style="font-family:'Calibri',sans-serif;">Attendance</span>
+            </div>
+          </td>
           <td colspan="2" class="level-val">مواظبة</td>
         </tr>
       </tbody>
@@ -638,27 +635,5 @@
 
   </div>
 
-  <script>
-    function resizeLogo(val) {
-      const wrap = document.getElementById('logoContainer');
-      wrap.style.width = val + 'px';
-      wrap.style.height = Math.round(val * 0.65) + 'px';
-    }
-
-    function toggleNameTableShading() {
-      const tbl = document.getElementById('studentInfoTable');
-      tbl.classList.toggle('shaded-name-mode');
-    }
-
-    function replaceLogoImage(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        document.getElementById('logoContainer').innerHTML = `<img src="${e.target.result}" class="paper-tone-logo" alt="شعار المدرسة">`;
-      };
-      reader.readAsDataURL(file);
-    }
-  </script>
 </body>
 </html>
