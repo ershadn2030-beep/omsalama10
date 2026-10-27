@@ -6,12 +6,12 @@
     <title>إشعار درجات الفصل الدراسي - مدرسة أم سلمة الخيرية (9 مواد)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Amiri:wght@700&family=Cairo:wght@700;800&family=Noto+Naskh+Arabic:wght@600;700&family=Noto+Sans+Arabic:wght@600;700;800&family=Scheherazade+New:wght@700&family=Tajawal:wght@700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Amiri:wght@400;700&family=Cairo:wght@700;800&family=Noto+Naskh+Arabic:wght@600;700&family=Noto+Sans+Arabic:wght@600;700;800&family=Scheherazade+New:wght@700&family=Tajawal:wght@700;800&display=swap');
 
         :root {
-            --cert-font: 'Noto Naskh Arabic', 'Arial', sans-serif;
-            --title-gap: 12px;
-            --table-gap: 15px;
+            --cert-font: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
+            --title-gap: 6px;
+            --table-gap: 14px;
         }
 
         * {
@@ -92,7 +92,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.3);
         }
 
-        .login-box img { max-width: 150px; margin-bottom: 10px; }
+        .login-box img { max-width: 140px; margin-bottom: 10px; }
         .login-box h2 { margin: 0 0 8px 0; color: #1e5241; font-size: 20px; font-weight: 800; }
         .login-box p { margin: 0 0 20px 0; color: #666; font-size: 13px; }
         .login-box input {
@@ -171,7 +171,7 @@
         .btn-clear { background: #e11d48; margin-right: auto; }
 
         /* =========================================================================
-           ورقة الشهادة الرسمية (مطابقة 100% للنموذج المرفق)
+           ورقة الشهادة الرسمية (مطابقة 100% للورقة المطبوعة في الصورة الأخيرة)
         ========================================================================= */
         .pages-wrapper {
             display: flex;
@@ -186,7 +186,7 @@
             min-width: 210mm;
             height: 297mm;
             background: #ffffff;
-            padding: 12mm 14mm 10mm 14mm;
+            padding: 14mm 15mm 12mm 15mm;
             margin: 0 auto;
             box-shadow: 0 5px 25px rgba(0,0,0,0.2);
             position: relative;
@@ -202,24 +202,42 @@
             break-after: auto;
         }
 
-        /* 1. الترويسة العلوية */
+        /* 1. الترويسة العلوية بنفس أحجام ومسافات الورقة المطبوعة */
         .top-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
+            align-items: flex-start;
+            margin-bottom: 2px;
         }
 
         .hdr-right {
-            width: 35%;
+            width: 34%;
             text-align: center;
-            font-size: 14.5px;
+            font-size: 17px;
             font-weight: 700;
-            line-height: 1.6;
+            line-height: 1.5;
+            padding-top: 2px;
+        }
+
+        /* رمز (رضي الله عنها) المربع المزخرف المطابق للورقة المطبوعة */
+        .rad-symbol {
+            display: inline-block;
+            vertical-align: middle;
+            width: 22px;
+            height: 21px;
+            margin: 0 1px;
+            position: relative;
+            top: -2px;
+        }
+
+        .rad-symbol svg {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
 
         .hdr-center {
-            width: 35%;
+            width: 36%;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -227,12 +245,14 @@
             justify-content: center;
         }
 
+        /* حجم الشعار مطابق للورقة المطبوعة تماماً */
         .logo-box {
-            width: 185px;
-            height: 100px;
+            width: 118px;
+            height: 72px;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-top: 2px;
         }
 
         .logo-box img {
@@ -245,7 +265,7 @@
             width: 30%;
         }
 
-        /* العناوين الوسطى تحت الشعار مع المسافة المطابقة للنموذج */
+        /* العناوين الوسطى تحت الشعار */
         .center-titles {
             text-align: center;
             margin-top: var(--title-gap);
@@ -253,114 +273,117 @@
         }
 
         .center-titles .title-ar {
-            font-size: 16px;
+            font-size: 17.5px;
             font-weight: 700;
-            margin-bottom: 6px;
+            margin-bottom: 3px;
         }
 
         .center-titles .title-en {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 13px;
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 12.5px;
             font-weight: 700;
             letter-spacing: 0.2px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .center-titles .grade-ar {
-            font-size: 15.5px;
+            font-size: 17px;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .center-titles .grade-en {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 13px;
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 12.5px;
             font-weight: 700;
         }
 
-        /* 2. الجدول الأول (المربع الأول: كل الخلايا رمادية بحدود سوداء واضحة) */
+        /* 2. الجدول الأول (المربع الرمادي المقسم بـ 8 أعمدة مطابقة للورقة المطبوعة) */
         table.info-tbl {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: var(--table-gap);
-            table-layout: fixed;
-            border: 1.8px solid #000000;
-        }
-
-        table.info-tbl td {
-            border: 1.4px solid #000000;
-            background-color: #d9d9d9 !important;
-            padding: 3px 6px;
-            text-align: center;
-            vertical-align: middle;
-            font-size: 14px;
-            font-weight: 700;
-            height: 28px;
-            line-height: 1.2;
-            white-space: nowrap;
-        }
-
-        .en-txt {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 11.5px;
-            font-weight: 700;
-            direction: ltr;
-        }
-
-        /* 3. جدول المواد الدراسية + السلوك والمواظبة */
-        table.marks-tbl {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 16px;
             table-layout: fixed;
-            border: 1.8px solid #000000;
+            border: 1.2px solid #000000;
+        }
+
+        table.info-tbl td {
+            border: 1px solid #000000;
+            background-color: #d9d9d9 !important;
+            padding: 2px 5px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 15.5px;
+            font-weight: 700;
+            height: 23px;
+            line-height: 1.1;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .en-txt {
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            direction: ltr;
+        }
+
+        /* 3. جدول المواد الدراسية (9 مواد) + السلوك والمواظبة المدموجة في الأسفل */
+        table.marks-tbl {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+            table-layout: fixed;
+            border: 1.2px solid #000000;
         }
 
         table.marks-tbl th, table.marks-tbl td {
-            border: 1.4px solid #000000;
-            padding: 2px 6px;
+            border: 1px solid #000000;
+            padding: 1px 6px;
             text-align: center;
             vertical-align: middle;
-            font-size: 14.5px;
+            font-size: 16px;
             font-weight: 700;
-            height: 25px;
-            line-height: 1.15;
+            height: 23px;
+            line-height: 1.1;
         }
 
         table.marks-tbl th {
             background-color: #d9d9d9 !important;
-            height: 35px;
-            font-size: 16px;
+            height: 25px;
+            font-size: 15.5px;
             font-weight: 700;
         }
 
         table.marks-tbl th.en-th {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 16px;
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 12.5px;
             font-weight: 700;
             direction: ltr;
         }
 
         .en-sub-cell {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 11.5px !important;
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 12px !important;
             font-weight: 700 !important;
             direction: ltr;
         }
 
         .num-cell {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 13.5px !important;
+            font-size: 15.5px !important;
             font-weight: 700 !important;
         }
 
-        .conduct-en-cell {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 13.5px !important;
-            font-weight: 700 !important;
-            text-align: left !important;
-            padding-left: 14px !important;
-            direction: ltr;
+        /* دمج السلوك والمواظبة كما في الورقة المطبوعة */
+        .merged-conduct-label {
+            padding: 1px 42px 1px 28px !important;
+        }
+
+        .merged-conduct-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
 
         /* 4. منطقة التوقيعات والختم */
@@ -368,59 +391,70 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 0 15px;
+            padding: 0 22px;
             margin-top: 8px;
             margin-bottom: 18px;
         }
 
-        .sig-right-col { width: 36%; text-align: center; }
-        .sig-mid-col { width: 28%; text-align: center; padding-top: 12px; font-size: 14.5px; font-weight: 700; }
-        .sig-left-col { width: 36%; text-align: center; padding-top: 12px; }
+        .sig-right-col { width: 35%; text-align: center; }
+        .sig-mid-col { width: 30%; text-align: center; padding-top: 6px; font-size: 16px; font-weight: 700; }
+        .sig-left-col { width: 35%; text-align: center; padding-top: 6px; }
 
-        .sig-block-ar { font-size: 14px; font-weight: 700; line-height: 1.35; }
-        .sig-block-en { font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: 700; margin-top: 2px; }
-        .sig-val-name { margin-top: 5px; font-size: 14px; font-weight: 700; min-height: 18px; }
+        .sig-block-ar { font-size: 16px; font-weight: 700; line-height: 1.25; }
+        .sig-block-en { font-family: Calibri, Arial, sans-serif; font-size: 12px; font-weight: 700; margin-top: 3px; }
+        .sig-val-name { margin-top: 6px; font-size: 16px; font-weight: 700; min-height: 20px; }
         .principal-box { margin-top: 14px; }
 
-        /* 5. شرح المستويات في أسفل الورقة */
+        /* 5. شرح المستويات في أسفل الورقة (مطابق للورقة المطبوعة تماماً) */
         .levels-footer {
             width: 100%;
-            margin-top: 6px;
+            margin-top: 8px;
             padding: 0 2px;
         }
 
-        .levels-head-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            font-size: 13px;
+        .levels-head-right {
+            text-align: right;
+            font-size: 15.5px;
             font-weight: 700;
+            margin-bottom: 6px;
+            direction: rtl;
         }
 
-        .levels-head-bar .en-side {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 11.5px;
+        .levels-head-right .und-ar {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .levels-head-right .en-lvl {
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 13px;
             font-weight: 700;
+            margin-right: 8px;
             direction: ltr;
+            display: inline-block;
+        }
+
+        .levels-head-right .und-en {
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
         .lvl-item-ar {
             text-align: right;
-            font-size: 11.5px;
+            font-size: 13.5px;
             font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 1px;
+            line-height: 1.35;
+            margin-bottom: 2px;
         }
 
         .lvl-item-en {
             text-align: left;
             direction: ltr;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 10px;
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 11px;
             font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 4px;
+            line-height: 1.25;
+            margin-bottom: 6px;
         }
 
         .del-btn {
@@ -448,19 +482,18 @@
 </head>
 <body>
 
-<!-- شريط تبديل الخطوط والمسافات التفاعلي السريع -->
+<!-- شريط تبديل الخطوط التفاعلي السريع -->
 <div class="quick-toolbar no-print">
     <div class="font-btns">
-        <span>🔤 جرب الخط مباشرة:</span>
-        <button class="q-btn active" onclick="setFont(this, `'Noto Naskh Arabic', 'Arial', sans-serif`)">1. خط الوورد/نسخ (المطابق)</button>
-        <button class="q-btn" onclick="setFont(this, `'Scheherazade New', 'Traditional Arabic', serif`)">2. خط تقليدي (Traditional)</button>
+        <span>🔤 الخط:</span>
+        <button class="q-btn active" onclick="setFont(this, `'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif`)">1. خط الورقة الأصلي (Traditional Arabic)</button>
+        <button class="q-btn" onclick="setFont(this, `'Noto Naskh Arabic', 'Arial', sans-serif`)">2. خط النسخ (Noto Naskh)</button>
         <button class="q-btn" onclick="setFont(this, `'Noto Sans Arabic', 'Arial', sans-serif`)">3. خط صريح (Sans)</button>
         <button class="q-btn" onclick="setFont(this, `'Almarai', sans-serif`)">4. المراعي</button>
-        <button class="q-btn" onclick="setFont(this, `'Tajawal', sans-serif`)">5. تجوال</button>
     </div>
     <div class="font-btns">
         <button class="q-btn" style="background:#0284c7;" onclick="toggleDash()">📝 إظهار/إخفاء خانات التسجيل</button>
-        <button class="q-btn" style="background:#10b981;" onclick="window.print()">🖨️ حفظ PDF</button>
+        <button class="q-btn" style="background:#10b981;" onclick="window.print()">🖨️ حفظ PDF / طباعة</button>
     </div>
 </div>
 
@@ -479,7 +512,7 @@
 <!-- لوحة الإدخال -->
 <div class="dashboard no-print" id="dashPanel">
     <div class="dash-title">
-        <span>تسجيل بيانات الطالبات (نسخة الـ 9 مواد المعتمدة بدون الاجتماعيات)</span>
+        <span>تسجيل بيانات الطالبات (نسخة الـ 9 مواد المطابقة للورقة المطبوعة)</span>
         <span style="font-size:13px; color:#1e5241;">عدد الشهادات: <b id="stuCounter">1</b></span>
     </div>
 
@@ -492,25 +525,25 @@
         <div class="inp-group">
             <label>نظام المواد</label>
             <select id="presetMode" onchange="changePresetMode(this.value)">
-                <option value="9">عليا (9 مواد - بدون اجتماعيات)</option>
-                <option value="8">أولية (8 مواد - بدون إنجليزي واجتماعيات)</option>
+                <option value="9">9 مواد (شاملة الإنجليزي - بدون اجتماعيات)</option>
+                <option value="8">8 مواد (الصفوف الأولية)</option>
             </select>
         </div>
         <div class="inp-group">
             <label>عنوان الإشعار</label>
-            <input type="text" id="hdrTitleAr" value="إشعار الدرجات الفصل الدراسي الأول لعام ١٤٤٨هـ">
+            <input type="text" id="hdrTitleAr" value="إشعار بدرجات الفصل الدراسي الأول للعام 1448 هـ">
         </div>
         <div class="inp-group">
             <label>الصف الدراسي (عربي)</label>
-            <input type="text" id="hdrGradeAr" value="الصف السادس الإبتدائي" oninput="autoTranslateGrade(this.value)">
+            <input type="text" id="hdrGradeAr" value="الخامس الابتدائي" oninput="autoTranslateGrade(this.value)">
         </div>
         <div class="inp-group">
             <label>الصف الدراسي (إنجليزي)</label>
-            <input type="text" id="hdrGradeEn" value="Sixth grade" dir="ltr">
+            <input type="text" id="hdrGradeEn" value="The Fifth Primary School" dir="ltr">
         </div>
         <div class="inp-group">
             <label>رائدة الفصل</label>
-            <input type="text" id="hdrCoord" value="بسمة عبدالخالق الشريف">
+            <input type="text" id="hdrCoord" value="أفنان زكريا عبد المعبود">
         </div>
         <div class="inp-group">
             <label>مديرة المدرسة</label>
@@ -521,12 +554,12 @@
     <div class="sec-bar">2. البيانات الأساسية للطالبة (المربع الأول)</div>
     <div class="grid-inputs">
         <div class="inp-group">
-            <label>إسم الطالبة (عربي)</label>
-            <input type="text" id="inName" placeholder="سميرة سراج الحق فياض الحق">
+            <label>اسم الطالبة (عربي)</label>
+            <input type="text" id="inName" placeholder="خديجة أولى مياه محمد فرايا">
         </div>
         <div class="inp-group">
-            <label>Student's name (إنجليزي)</label>
-            <input type="text" id="inNameEn" placeholder="Samira Siraj Al-Haq" dir="ltr">
+            <label>Student Name (إنجليزي)</label>
+            <input type="text" id="inNameEn" placeholder="kadejah ula meyah" dir="ltr">
         </div>
         <div class="inp-group">
             <label>الفصل (Class)</label>
@@ -534,7 +567,7 @@
         </div>
         <div class="inp-group">
             <label>تاريخ الميلاد</label>
-            <input type="text" id="inDob" placeholder="2013">
+            <input type="text" id="inDob" placeholder="2007">
         </div>
         <div class="inp-group">
             <label>الجنسية (عربي)</label>
@@ -546,11 +579,11 @@
         </div>
         <div class="inp-group">
             <label>رقم الهوية (Identity No)</label>
-            <input type="text" id="inId" placeholder="2536558147">
+            <input type="text" id="inId" placeholder="2257148607">
         </div>
         <div class="inp-group">
-            <label>ولي أمر الطالب/ة</label>
-            <input type="text" id="inParent" placeholder="سراج الحق فياض الحق">
+            <label>ولي أمر الطالبة</label>
+            <input type="text" id="inParent" placeholder="أولى مياه محمد فرايا">
         </div>
     </div>
 
@@ -560,11 +593,11 @@
     <div class="grid-inputs" style="margin-top:8px;">
         <div class="inp-group">
             <label>السلوك (Conduct)</label>
-            <input type="text" id="inConduct" value="متعاون">
+            <input type="text" id="inConduct" value="متعاونة">
         </div>
         <div class="inp-group">
             <label>المواظبة (Attendance)</label>
-            <input type="text" id="inAttend" value="مواظب">
+            <input type="text" id="inAttend" value="مواظبة">
         </div>
     </div>
 
@@ -583,6 +616,9 @@
 
     const DEFAULT_LOGO = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 150"><ellipse cx="130" cy="68" rx="75" ry="52" fill="%23fdf8fb" stroke="%239b5986" stroke-width="3.5"/><ellipse cx="130" cy="68" rx="68" ry="46" fill="none" stroke="%237a9e7e" stroke-width="1.5"/><path d="M72,58 A58,38 0 0,1 188,58" fill="none" stroke="%23d8b4ce" stroke-width="14" opacity="0.45"/><text x="130" y="34" font-family="Arial" font-size="9.5" font-weight="bold" fill="%233b1d31" text-anchor="middle">إن هذا القرآن يهدي للتي هي أقوم</text><rect x="95" y="44" width="70" height="32" rx="4" fill="%23f4fbf4" stroke="%234f7754" stroke-width="1.8"/><line x1="130" y1="44" x2="130" y2="76" stroke="%234f7754" stroke-width="1.5"/><text x="147" y="57" font-family="Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">إنا نحن</text><text x="147" y="68" font-family="Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">نزلنا الذكر</text><text x="112" y="57" font-family="Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">وإنا له</text><text x="112" y="68" font-family="Arial" font-size="7.5" font-weight="bold" fill="%231e5241" text-anchor="middle">لحافظون</text><rect x="62" y="88" width="136" height="22" rx="4" fill="%23ecd5e6" stroke="%237c3f68" stroke-width="1.8"/><text x="130" y="103" font-family="Arial" font-size="12" font-weight="bold" fill="%23222" text-anchor="middle">مدرسة أم سلمة الخيرية</text><rect x="96" y="114" width="68" height="18" rx="4" fill="%23ecd5e6" stroke="%237c3f68" stroke-width="1.5"/><text x="130" y="127" font-family="Arial" font-size="10.5" font-weight="bold" fill="%23222" text-anchor="middle">( بنات )</text></svg>`;
 
+    // رمز (رضي الله عنها) المربع المصحفي المزخرف بنفس هيئة الكاليجرافي الموجود في الورقة المطبوعة
+    const RADIYALLAHU_ANHA_SVG = `<span class="rad-symbol" title="رضي الله عنها"><svg viewBox="0 0 60 54" xmlns="http://www.w3.org/2000/svg"><path d="M5,4 Q30,1 55,4 M5,50 Q30,53 55,50" stroke="#000" stroke-width="1.5" fill="none"/><text x="30" y="23" font-family="'Traditional Arabic', 'Amiri', serif" font-size="20" font-weight="bold" fill="#000" text-anchor="middle">رَضِيَ اللّٰهُ</text><text x="30" y="44" font-family="'Traditional Arabic', 'Amiri', serif" font-size="21" font-weight="bold" fill="#000" text-anchor="middle">عَنْهَا</text></svg></span>`;
+
     let activeLogo = localStorage.getItem('ums_custom_logo') || DEFAULT_LOGO;
     document.querySelectorAll('.embedded-logo-img').forEach(img => img.src = activeLogo);
 
@@ -595,6 +631,18 @@
     function toggleDash() {
         const d = document.getElementById('dashPanel');
         d.style.display = d.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // تحويل الأرقام إلى الأرقام العربية الشرقية (١ ٢ ٣) لعمود التسلسل وتاريخ الميلاد العربي كما في الورقة
+    function toEasternDigits(str) {
+        if (str === null || str === undefined) return '';
+        const eastern = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+        return String(str).replace(/[0-9]/g, w => eastern[+w]);
+    }
+
+    function toWesternDigits(str) {
+        if (str === null || str === undefined) return '';
+        return String(str).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
     }
 
     async function uploadSchoolLogo(e) {
@@ -644,27 +692,27 @@
         }
     }
 
-    // 9 مواد فقط (تم حذف التربية الاجتماعية والوطنية نهائياً)
+    // 9 مواد دراسية بالضبط (الـ 8 مواد + الإنجليزي، بدون الاجتماعيات)
     const subjects9 = [
-        { ar: "القران الكريم", en: "The Holy Qur'an" },
+        { ar: "القرآن الكريم", en: "The Holy Qur'an" },
         { ar: "التوحيد", en: "Monotheism" },
-        { ar: "الفقة", en: "Jurisprudence" },
+        { ar: "الفقه", en: "Jurisprudence" },
         { ar: "لغتي", en: "Prompt's Traditions" },
-        { ar: "رياضيات", en: "Mathematics" },
-        { ar: "علوم", en: "Science" },
+        { ar: "الرياضيات", en: "Mathematics" },
+        { ar: "العلوم", en: "Science" },
         { ar: "انجليزي", en: "English" },
-        { ar: "التربية الإسرية", en: "Family Life Education" },
+        { ar: "التربية الأسرية", en: "Family Life Education" },
         { ar: "التربية الفنية", en: "Art education" }
     ];
 
     const subjects8 = [
-        { ar: "القران الكريم", en: "The Holy Qur'an" },
+        { ar: "القرآن الكريم", en: "The Holy Qur'an" },
         { ar: "التوحيد", en: "Monotheism" },
-        { ar: "الفقة", en: "Jurisprudence" },
+        { ar: "الفقه", en: "Jurisprudence" },
         { ar: "لغتي", en: "Prompt's Traditions" },
-        { ar: "رياضيات", en: "Mathematics" },
-        { ar: "علوم", en: "Science" },
-        { ar: "التربية الإسرية", en: "Family Life Education" },
+        { ar: "الرياضيات", en: "Mathematics" },
+        { ar: "العلوم", en: "Science" },
+        { ar: "التربية الأسرية", en: "Family Life Education" },
         { ar: "التربية الفنية", en: "Art education" }
     ];
 
@@ -696,8 +744,8 @@
             document.getElementById('hdrGradeEn').value = 'The First Year Primary';
         } else {
             currentSubjects = subjects9;
-            document.getElementById('hdrGradeAr').value = 'الصف السادس الإبتدائي';
-            document.getElementById('hdrGradeEn').value = 'Sixth grade';
+            document.getElementById('hdrGradeAr').value = 'الخامس الابتدائي';
+            document.getElementById('hdrGradeEn').value = 'The Fifth Primary School';
         }
         buildSubjectsInputs();
     }
@@ -706,25 +754,25 @@
 
     const sampleStudent = {
         id: 1,
-        titleAr: "إشعار الدرجات الفصل الدراسي الأول لعام ١٤٤٨هـ",
-        gradeAr: "الصف السادس الإبتدائي",
-        gradeEn: "Sixth grade",
-        coord: "بسمة عبدالخالق الشريف",
+        titleAr: "إشعار بدرجات الفصل الدراسي الأول للعام 1448 هـ",
+        gradeAr: "الخامس الابتدائي",
+        gradeEn: "The Fifth Primary School",
+        coord: "أفنان زكريا عبد المعبود",
         principal: "فريدة محمد الأحمدي",
-        name: "سميرة سراج الحق فياض الحق",
-        nameEn: "Samira Siraj Al-Haq",
+        name: "خديجة أولى مياه محمد فرايا",
+        nameEn: "kadejah ula meyah",
         cls: "1",
-        dob: "2013",
+        dob: "2007",
         natAr: "برماوية",
         natEn: "Burma",
-        idNo: "2536558147",
-        parentName: "سراج الحق فياض الحق",
-        conduct: "متعاون",
-        attend: "مواظب",
+        idNo: "2257148607",
+        parentName: "أولى مياه محمد فرايا",
+        conduct: "متعاونة",
+        attend: "مواظبة",
         subjects: subjects9.map((s) => ({ ar: s.ar, en: s.en, val: "متفوق" }))
     };
 
-    let records = JSON.parse(localStorage.getItem('ums_interactive_9subs_only') || 'null');
+    let records = JSON.parse(localStorage.getItem('ums_paper_exact_9subs') || 'null');
     if (!records || !records.length) {
         records = [sampleStudent];
     }
@@ -733,16 +781,17 @@
         const v = val.trim();
         const dict = {
             'الأول ابتدائي': 'The First Year Primary',
-            'الصف الأول الإبتدائي': 'First grade',
+            'الأول الابتدائي': 'The First Primary School',
             'الثاني ابتدائي': 'The Second Year Primary',
-            'الصف الثاني الإبتدائي': 'Second grade',
+            'الثاني الابتدائي': 'The Second Primary School',
             'الثالث ابتدائي': 'The Third Year Primary',
-            'الصف الثالث الإبتدائي': 'Third grade',
+            'الثالث الابتدائي': 'The Third Primary School',
             'الرابع ابتدائي': 'The Fourth Year Primary',
-            'الصف الرابع الإبتدائي': 'Fourth grade',
-            'الخامس ابتدائي': 'The Fifth Year Primary',
-            'الصف الخامس الإبتدائي': 'Fifth grade',
-            'السادس ابتدائي': 'Sixth grade',
+            'الرابع الابتدائي': 'The Fourth Primary School',
+            'الخامس ابتدائي': 'The Fifth Primary School',
+            'الخامس الابتدائي': 'The Fifth Primary School',
+            'السادس ابتدائي': 'The Sixth Primary School',
+            'السادس الابتدائي': 'The Sixth Primary School',
             'الصف السادس الإبتدائي': 'Sixth grade'
         };
         if (dict[v]) document.getElementById('hdrGradeEn').value = dict[v];
@@ -751,7 +800,7 @@
     function addStudentRecord() {
         const name = document.getElementById('inName').value.trim();
         if (!name) {
-            alert('يرجى إدخال إسم الطالبة أولاً.');
+            alert('يرجى إدخال اسم الطالبة أولاً.');
             document.getElementById('inName').focus();
             return;
         }
@@ -781,7 +830,7 @@
         };
 
         records.push(rec);
-        localStorage.setItem('ums_interactive_9subs_only', JSON.stringify(records));
+        localStorage.setItem('ums_paper_exact_9subs', JSON.stringify(records));
         renderAllPages();
 
         document.getElementById('inName').value = '';
@@ -793,14 +842,14 @@
 
     function removeRecord(id) {
         records = records.filter(r => r.id !== id);
-        localStorage.setItem('ums_interactive_9subs_only', JSON.stringify(records));
+        localStorage.setItem('ums_paper_exact_9subs', JSON.stringify(records));
         renderAllPages();
     }
 
     function clearAllRecords() {
         if (confirm('هل أنت متأكد من مسح جميع الشهادات؟')) {
             records = [];
-            localStorage.setItem('ums_interactive_9subs_only', '[]');
+            localStorage.setItem('ums_paper_exact_9subs', '[]');
             renderAllPages();
         }
     }
@@ -812,12 +861,12 @@
 
         records.forEach(r => {
             let subjectRows = '';
-            // فلترة أي مادة اجتماعيات قديمة تلقائياً لضمان بقاء 9 مواد فقط
-            const subsList = (r.subjects || []).filter(s => !s.ar.includes('الإجتماعية') && !s.ar.includes('الاجتماعية'));
+            // التأكد من عدم وجود مادة الاجتماعيات نهائياً (9 مواد فقط)
+            const subsList = (r.subjects || []).filter(s => !s.ar.includes('الإجتماعية') && !s.ar.includes('الاجتماعية') && !s.ar.includes('اجتماعية'));
             subsList.forEach((sub, idx) => {
                 subjectRows += `
                     <tr>
-                        <td class="num-cell" contenteditable="true">${idx + 1}</td>
+                        <td class="num-cell" contenteditable="true">${toEasternDigits(idx + 1)}</td>
                         <td contenteditable="true">${sub.ar}</td>
                         <td contenteditable="true">${sub.val}</td>
                         <td class="en-sub-cell" contenteditable="true">${sub.en}</td>
@@ -825,17 +874,20 @@
                 `;
             });
 
+            const dobAr = r.dob ? toEasternDigits(r.dob) : '';
+            const dobEn = r.dob ? toWesternDigits(r.dob) : '';
+
             const page = document.createElement('div');
             page.className = 'cert-page';
             page.innerHTML = `
                 <button class="del-btn no-print" onclick="removeRecord(${r.id})">حذف الشهادة ✕</button>
 
-                <!-- 1. الترويسة العلوية -->
+                <!-- 1. الترويسة العلوية مع رمز (رضي الله عنها) وحجم الشعار المطابق للورقة المطبوعة -->
                 <div class="top-header">
                     <div class="hdr-right" contenteditable="true">
                         المملكة العربية السعودية<br>
-                        مدرسة ام سلمة <span style="font-size:15px; font-weight:normal;">ﷺ</span> الخيرية<br>
-                        لتعليم القران و السنة النبوية
+                        مدرسة أم سلمة ${RADIYALLAHU_ANHA_SVG} الخيرية<br>
+                        لتعليم القرآن والسنة المطهرة
                     </div>
                     <div class="hdr-center">
                         <div class="logo-box">
@@ -845,83 +897,92 @@
                     <div class="hdr-left"></div>
                 </div>
 
-                <!-- العناوين الوسطى تحت الشعار بمسافات مطابقة للأصل -->
+                <!-- العناوين الوسطى تحت الشعار -->
                 <div class="center-titles" contenteditable="true">
                     <div class="title-ar">${r.titleAr}</div>
-                    <div class="title-en">A NTIFICATION OF THE FIRST SEMESTER DEGREE</div>
+                    <div class="title-en">A NOTIFHCATION OF THE FIRST SEMESTER DEGREE</div>
                     <div class="grade-ar">${r.gradeAr}</div>
                     <div class="grade-en">${r.gradeEn}</div>
                 </div>
 
-                <!-- 2. الجدول الأول (جميع الخلايا رمادية وبأبعاد متناسقة لا تتلاصق فيها الكلمات) -->
+                <!-- 2. الجدول الأول (8 أعمدة رمادية مطابقة لتقسيم الورقة المطبوعة في الصورة) -->
                 <table class="info-tbl">
                     <colgroup>
-                        <col style="width: 12.5%;">
-                        <col style="width: 13.0%;">
-                        <col style="width: 9.0%;">
-                        <col style="width: 8.0%;">
-                        <col style="width: 7.5%;">
-                        <col style="width: 13.5%;">
-                        <col style="width: 36.5%;">
+                        <col style="width: 11.5%;"> <!-- 1: تاريخ الميلاد -->
+                        <col style="width: 13.5%;"> <!-- 2: ٢٠٠٧ -->
+                        <col style="width: 7.5%;">  <!-- 3: الجنسية -->
+                        <col style="width: 8.5%;">  <!-- 4: الفصل: / برماوية -->
+                        <col style="width: 7.0%;">  <!-- 5: 1 / Burma -->
+                        <col style="width: 11.5%;"> <!-- 6: Class: / Nationality -->
+                        <col style="width: 28.0%;"> <!-- 7: 2007 / Student Name -->
+                        <col style="width: 12.5%;"> <!-- 8: Date of Birth -->
                     </colgroup>
                     <tbody>
                         <tr>
-                            <td colspan="3" style="text-align:right; padding-right:8px;" contenteditable="true">
-                                <span>إسم الطالبة:</span>
-                                <span style="margin-right:4px;">${r.name}</span>
+                            <td colspan="3" style="text-align:right; padding-right:6px;" contenteditable="true">
+                                <span>اسم الطالبة:</span>
+                                <span style="margin-right:3px;">${r.name}</span>
                             </td>
-                            <td contenteditable="true">الفصل</td>
-                            <td class="num-cell" contenteditable="true">${r.cls}</td>
-                            <td class="en-txt" style="text-align:center;" contenteditable="true">Class:</td>
-                            <td class="en-txt" style="text-align:left; padding-left:8px;" contenteditable="true">
-                                <span>Student's name:</span>
-                                <span style="margin-left:5px;">${r.nameEn || ''}</span>
+                            <td contenteditable="true">الفصل:</td>
+                            <td class="en-txt" contenteditable="true">${r.cls}</td>
+                            <td class="en-txt" contenteditable="true">Class:</td>
+                            <td colspan="2" class="en-txt" style="text-align:left; padding-left:6px;" contenteditable="true">
+                                <span>Student Name:</span><span>${r.nameEn || ''}</span>
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align:right; padding-right:6px;" contenteditable="true">تاريخ الميلاد:</td>
-                            <td class="num-cell" contenteditable="true">${r.dob}</td>
+                            <td contenteditable="true">تاريخ الميلاد</td>
+                            <td contenteditable="true">${dobAr}</td>
                             <td contenteditable="true">الجنسية</td>
                             <td contenteditable="true">${r.natAr}</td>
                             <td class="en-txt" contenteditable="true">${r.natEn}</td>
-                            <td class="en-txt" style="text-align:center;" contenteditable="true">Nationality:</td>
-                            <td class="en-txt" style="text-align:left; padding-left:8px;" contenteditable="true">Date of Birth:</td>
+                            <td class="en-txt" contenteditable="true">Nationality</td>
+                            <td class="en-txt" contenteditable="true">${dobEn}</td>
+                            <td class="en-txt" contenteditable="true">Date of Birth</td>
                         </tr>
                         <tr>
-                            <td style="text-align:right; padding-right:6px;" contenteditable="true">رقم الهوية:</td>
-                            <td colspan="5" class="num-cell" style="text-align:right; padding-right:18px; font-size:14.5px; letter-spacing:0.5px;" contenteditable="true">${r.idNo}</td>
-                            <td class="en-txt" style="text-align:center;" contenteditable="true">Identity No</td>
+                            <td colspan="2" contenteditable="true">رقم الهوية</td>
+                            <td colspan="4" class="en-txt" style="font-size:13px;" contenteditable="true">${r.idNo}</td>
+                            <td colspan="2" class="en-txt" contenteditable="true">Identity No</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <!-- 3. جدول المواد الدراسية (9 مواد) + السلوك والمواظبة -->
+                <!-- 3. جدول المواد الدراسية (9 مواد فقط) + السلوك والمواظبة المدموجة -->
                 <table class="marks-tbl">
                     <colgroup>
-                        <col style="width: 12.0%;">
-                        <col style="width: 28.0%;">
-                        <col style="width: 33.5%;">
-                        <col style="width: 26.5%;">
+                        <col style="width: 11.5%;">
+                        <col style="width: 29.5%;">
+                        <col style="width: 29.0%;">
+                        <col style="width: 30.0%;">
                     </colgroup>
                     <thead>
                         <tr>
                             <th>م</th>
                             <th>المواد الدراسية</th>
-                            <th>مستوى الطالب</th>
+                            <th>مستوى الطالبة</th>
                             <th class="en-th">Subject</th>
                         </tr>
                     </thead>
                     <tbody>
                         ${subjectRows}
                         <tr>
-                            <td colspan="2" contenteditable="true">السلوك</td>
-                            <td contenteditable="true">${r.conduct}</td>
-                            <td class="conduct-en-cell" contenteditable="true">Conduct</td>
+                            <td colspan="2" class="merged-conduct-label" contenteditable="true">
+                                <div class="merged-conduct-flex">
+                                    <span>السلوك</span>
+                                    <span class="en-txt">Conduct</span>
+                                </div>
+                            </td>
+                            <td colspan="2" contenteditable="true">${r.conduct}</td>
                         </tr>
                         <tr>
-                            <td colspan="2" contenteditable="true">المواظبة</td>
-                            <td contenteditable="true">${r.attend}</td>
-                            <td class="conduct-en-cell" contenteditable="true">Attendance</td>
+                            <td colspan="2" class="merged-conduct-label" contenteditable="true">
+                                <div class="merged-conduct-flex">
+                                    <span>المواظبة</span>
+                                    <span class="en-txt">Attendance</span>
+                                </div>
+                            </td>
+                            <td colspan="2" contenteditable="true">${r.attend}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -945,30 +1006,30 @@
                     </div>
 
                     <div class="sig-left-col">
-                        <div class="sig-block-ar">ولي أمر الطالب/ة</div>
+                        <div class="sig-block-ar">ولي أمر الطالبة</div>
                         <div class="sig-block-en">The student parent</div>
-                        <div class="sig-val-name" style="margin-top:6px;">${r.parentName || ''}</div>
+                        <div class="sig-val-name" style="margin-top:8px;">${r.parentName || ''}</div>
                     </div>
                 </div>
 
-                <!-- 5. شرح المستويات في أسفل الصفحة -->
+                <!-- 5. شرح المستويات في أسفل الصفحة كما في الورقة المطبوعة -->
                 <div class="levels-footer" contenteditable="true">
-                    <div class="levels-head-bar">
-                        <span>مستوى الطالب :</span>
-                        <span class="en-side">Student's Level:</span>
+                    <div class="levels-head-right">
+                        <span class="und-ar">مستـوى الطالبة</span>
+                        <span class="en-lvl">Student's <span class="und-en">Level</span> :</span>
                     </div>
 
-                    <div class="lvl-item-ar">المستوى (متفوق): يعني أن الطالب قد أتقن في جميع العلوم والمعارف والمهارات المقررة في المادة الدراسية.</div>
+                    <div class="lvl-item-ar">المستوى (متفوق): يعني أن الطالبة قد أتقنت جميع العلوم والمعارف والمهارات المقررة في المادة الدراسية.</div>
                     <div class="lvl-item-en">The level (superior): it realizes that the student has mastered all the sciences, knowledge and skills stipulated in the subject.</div>
 
-                    <div class="lvl-item-ar">المستوى (المتقدم): يعني أن الطالب قد أتقن 66% أو أكثر في جميع العلوم و المعارف و المهارات المقررة في المادة الدراسية</div>
-                    <div class="lvl-item-en">Level (advanced): means A, the student has mastered 66% or more of the required sciences, knowledge and skills, including<br>minimum sciences, knowledge and skills</div>
+                    <div class="lvl-item-ar">المستوى (متقدم): يعني أن الطالبة قد أتقنت 66% أو أكثر من العلوم والمعارف والمهارات المقررة، بما في ذلك علوم ومعارف ومهارات الحد الأدنى</div>
+                    <div class="lvl-item-en">Level (advanced): means A, the student has mastered 66% or more of the required sciences, knowledge and skills, including minimum sciences,<br>knowledge and skills</div>
 
-                    <div class="lvl-item-ar">المستوى(متمكن): يعني أن الطالب قد أتقن على الاقل الحد الادنى في جميع العلوم والمعارف والمهارات المقررة في المادة الدراسية.</div>
+                    <div class="lvl-item-ar">المستوى (متمكن): يعني أن الطالبة قد أتقنت على الأقل الحد الأدنى من العلوم والمعارف والمهارات المقررة.</div>
                     <div class="lvl-item-en">Level (proficient): means that the student has mastered, at least, the minimum set of sciences, knowledge and skills.</div>
 
-                    <div class="lvl-item-ar">المستوى(غير مجتاز): يعني أن الطالب لم يتقن معرفة أو مهارة أو أكثر من العلوم المقررة في المادة الدراسية</div>
-                    <div class="lvl-item-en">Level (not passed): means that the student has not mastered one or more knowledge or skills in the minimum established<br>sciences, knowledge and skills</div>
+                    <div class="lvl-item-ar">المستوى (غير مجتاز): يعني أن الطالبة لم تتقن معرفة أو مهارة أو أكثر من علوم ومعارف ومهارات الحد الأدنى المقررة.</div>
+                    <div class="lvl-item-en">Level (not passed): means that the student has not mastered one or more knowledge or skills in the minimum established sciences, knowledge and<br>skills.</div>
                 </div>
             `;
             wrapper.appendChild(page);
