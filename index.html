@@ -12,6 +12,7 @@
             --cert-font: 'Traditional Arabic', 'Amiri', 'Noto Naskh Arabic', serif;
             --logo-w: 112px;
             --logo-h: 66px;
+            --name-font-size: 15px;
         }
 
         * {
@@ -371,7 +372,7 @@
 
         .en-txt {
             font-family: Calibri, Arial, sans-serif;
-            font-size: 11.5px;
+            font-size: 15px;
             font-weight: 700;
             direction: ltr;
             padding-left: 4px !important;
@@ -382,6 +383,7 @@
             display: inline-block;
             white-space: nowrap;
             vertical-align: middle;
+            font-size: var(--name-font-size, 15px) !important;
         }
 
         /* 3. جدول المواد الدراسية + السلوك والمواظبة */
@@ -537,7 +539,7 @@
 </head>
 <body>
 
-<!-- شريط التحكم السريع للخط وحجم الشعار -->
+<!-- شريط التحكم السريع للخط وحجم خط الاسم وحجم الشعار -->
 <div class="quick-toolbar no-print">
     <div class="font-btns">
         <span>🔤 الخط:</span>
@@ -546,8 +548,14 @@
         <button class="q-btn" onclick="setFont(this, `'Noto Sans Arabic', 'Arial', sans-serif`)">3. خط صريح</button>
     </div>
     <div class="font-btns">
-        <span>📐 حجم الشعار:</span>
-        <input type="range" min="80" max="170" value="112" oninput="resizeLogo(this.value)" style="width:90px; cursor:pointer;">
+        <span>📏 خط الاسم (<b id="nameFontDisplayTop">15</b>):</span>
+        <button class="q-btn" style="background:#059669;" onclick="changeNameFontSize(0.5)">➕ تكبير</button>
+        <button class="q-btn" style="background:#d97706;" onclick="changeNameFontSize(-0.5)">➖ تصغير</button>
+        <button class="q-btn" onclick="resetNameFontSize()">↺ 15</button>
+    </div>
+    <div class="font-btns">
+        <span>📐 الشعار:</span>
+        <input type="range" min="80" max="170" value="112" oninput="resizeLogo(this.value)" style="width:75px; cursor:pointer;">
         <button class="q-btn" style="background:#0284c7;" onclick="toggleDash()">📝 إظهار/إخفاء التسجيل</button>
         <button class="q-btn" style="background:#10b981;" onclick="window.print()">🖨️ حفظ PDF / طباعة</button>
     </div>
@@ -604,6 +612,12 @@
 
     <div class="sec-bar">
         <span>2. البيانات الأساسية للطالبة (المربع الأول)</span>
+        <div style="display:flex; gap:5px; align-items:center;">
+            <span style="font-size:11.5px;">حجم خط الاسم (<b id="nameFontDisplayDash">15</b>):</span>
+            <button type="button" class="mini-btn" onclick="changeNameFontSize(0.5)" style="background:#059669; color:#fff; border:none; padding:3px 9px;">➕ تكبير الخط</button>
+            <button type="button" class="mini-btn" onclick="changeNameFontSize(-0.5)" style="background:#d97706; color:#fff; border:none; padding:3px 9px;">➖ تصغير الخط</button>
+            <button type="button" class="mini-btn" onclick="resetNameFontSize()" style="padding:3px 8px;">↺ افتراضي</button>
+        </div>
     </div>
     <div class="grid-inputs">
         <div class="inp-group">
@@ -680,11 +694,34 @@
     let activeLogo = localStorage.getItem('ums_custom_logo') || DEFAULT_LOGO;
     document.querySelectorAll('.embedded-logo-img').forEach(img => img.src = activeLogo);
 
+    let currentNameFontSize = parseFloat(localStorage.getItem('ums_name_font_size') || '15');
+
+    function applyNameFontSize() {
+        document.documentElement.style.setProperty('--name-font-size', currentNameFontSize + 'px');
+        const topEl = document.getElementById('nameFontDisplayTop');
+        const dashEl = document.getElementById('nameFontDisplayDash');
+        if (topEl) topEl.innerText = currentNameFontSize;
+        if (dashEl) dashEl.innerText = currentNameFontSize;
+    }
+
+    function changeNameFontSize(delta) {
+        currentNameFontSize = Math.min(22, Math.max(8, +(currentNameFontSize + delta).toFixed(1)));
+        localStorage.setItem('ums_name_font_size', currentNameFontSize);
+        applyNameFontSize();
+    }
+
+    function resetNameFontSize() {
+        currentNameFontSize = 15;
+        localStorage.setItem('ums_name_font_size', currentNameFontSize);
+        applyNameFontSize();
+    }
+
+    applyNameFontSize();
+
     function setFont(btn, fontName) {
         document.documentElement.style.setProperty('--cert-font', fontName);
         document.querySelectorAll('.font-btns .q-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        setTimeout(fitAllNameCells, 40);
     }
 
     function resizeLogo(val) {
@@ -706,33 +743,6 @@
     function toWesternDigits(str) {
         if (str === null || str === undefined) return '';
         return String(str).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
-    }
-
-    function fitSingleCell(td) {
-        const wrap = td.querySelector('.name-fit-wrap');
-        if (!wrap) return;
-        const isEn = td.classList.contains('en-txt');
-        let fontSize = isEn ? 11.5 : 15;
-        const minSize = 7.5;
-        wrap.style.fontSize = fontSize + 'px';
-
-        const maxAllowedWidth = td.clientWidth - 12;
-        if (maxAllowedWidth <= 20) return;
-
-        while (wrap.offsetWidth > maxAllowedWidth && fontSize > minSize) {
-            fontSize -= 0.3;
-            wrap.style.fontSize = fontSize.toFixed(1) + 'px';
-        }
-    }
-
-    function fitAllNameCells() {
-        document.querySelectorAll('.auto-fit-td').forEach(td => fitSingleCell(td));
-    }
-
-    window.addEventListener('resize', fitAllNameCells);
-    window.addEventListener('beforeprint', fitAllNameCells);
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(fitAllNameCells);
     }
 
     async function uploadSchoolLogo(e) {
@@ -782,7 +792,6 @@
         }
     }
 
-    // جميع المواد الـ 11 بالترتيب المطابق للصورة المرفقة
     const MASTER_11_SUBJECTS = [
         { ar: "القرآن الكريم", en: "The Holy Qur'an", val: "متفوق" },
         { ar: "التوحيد", en: "Monotheism", val: "متفوق" },
@@ -1049,7 +1058,7 @@
                     <div class="grade-en">${r.gradeEn}</div>
                 </div>
 
-                <!-- 2. الجدول الأول (توسيع مربع Date of Birth إلى 16% ليدخل حرف h بالكامل داخل المربع) -->
+                <!-- 2. الجدول الأول (حجم خط الاسم مطابق تماماً لـ Date of Birth مع أزرار التحكم بالتكبير والتصغير) -->
                 <table class="info-tbl">
                     <colgroup>
                         <col style="width: 11.5%;">
@@ -1063,13 +1072,13 @@
                     </colgroup>
                     <tbody>
                         <tr>
-                            <td colspan="3" class="auto-fit-td" style="text-align:right; padding-right:8px;" contenteditable="true" oninput="fitSingleCell(this)">
+                            <td colspan="3" style="text-align:right; padding-right:8px;" contenteditable="true">
                                 <div class="name-fit-wrap"><span>اسم الطالبة:</span> <span style="margin-right:3px;">${r.name}</span></div>
                             </td>
                             <td contenteditable="true">الفصل:</td>
                             <td class="en-txt" contenteditable="true">${r.cls}</td>
                             <td class="en-txt" contenteditable="true">Class:</td>
-                            <td colspan="2" class="en-txt auto-fit-td" style="text-align:left; padding-left:8px;" contenteditable="true" oninput="fitSingleCell(this)">
+                            <td colspan="2" class="en-txt" style="text-align:left; padding-left:8px;" contenteditable="true">
                                 <div class="name-fit-wrap"><span>Student Name: </span><span>${r.nameEn || ''}</span></div>
                             </td>
                         </tr>
@@ -1177,8 +1186,6 @@
             `;
             wrapper.appendChild(page);
         });
-
-        setTimeout(fitAllNameCells, 30);
     }
 
     renderAllPages();
